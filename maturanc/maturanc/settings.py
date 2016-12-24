@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'iskanje',
     'domov',
     'profil',
+    'api',
 ]
 
 MIDDLEWARE = [

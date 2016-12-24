@@ -40,16 +40,21 @@
                         <li><a href="#">Dogodki</a></li>
                         <li><a href="#">Trgovina</a></li>
                         <li><a href="#">Izlet</a></li>
+                        {% if request.user.is_authenticated %}
                         <li>
                             <a href="{% url 'profil' %}" title="Račun">
                                 <img class="circle minislikaracun right" src="{% static 'img/2015-trending-mens-haircuts-men39s-hairstyles-trends-for-2014-2015-givenchy-saint-laurent-Picture-HD-Wallpapers-Saamit.jpg' %}"
-                                /> Amadej
+                                /> {{user.first_name}} {{user.last_name}}
                             </a>
                             <a href="{% url 'profil' %}" title="Račun"></a>
                         </li>
-                        <li><a href="#" title="Odjava"><i style="font-size: 13pt;" class="fa fa-sign-out" aria-hidden="true"></i></a></li>
+                        
+                        
+                        <li><a href="#" title="Odjava" id="odjavaButton"><i style="font-size: 13pt;" class="fa fa-sign-out" aria-hidden="true"></i></a></li>
+                        {% else %}
+                        
                         <li><a href="#modal1" class="waves-effect waves-light btn modal-trigger">Prijava</a></li>
-
+                        {% endif %}
                     </ul>
                     <!-- telefon meni -->
                     <ul class="side-nav" id="mobile-demo">
@@ -296,6 +301,7 @@
 
     <script src="{% static 'js/custom.js' %}"></script>
     <script src="{% static 'js/noUiSlider.js' %}"></script>
+    <script src="{% static 'js/prijava.js' %}"></script>
 
 
     <script>
