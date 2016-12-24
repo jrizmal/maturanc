@@ -1,0 +1,394 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+{% load static %}
+<head runat="server">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+    
+
+    <link href="{% static 'css/StyleSheet.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/media.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/listInput.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/noUislider.css' %}" rel="stylesheet" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+
+<body>
+
+    <!--Navigacija-->
+
+    <div class="navbar-fixed">
+        <nav id="meni">
+            <div class="nav-wrapper blue-grey darken-2 ">
+                <div class="container">
+                    <a href="{% url 'domov' %}" class="brand-logo">Maturanc</a>
+                    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+
+
+                    <ul class="right hide-on-med-and-down">
+
+                        <li>
+                            <a id="toggle-search" href="#!">
+                                <i class="large material-icons">search</i>
+                            </a>
+                        </li>
+                        <li><a class='dropdown-button' href='#' data-beloworigin="true" data-activates='dropdown1'>Maturantski ples<i class="material-icons right">arrow_drop_down</i></a></li>
+                        <li><a href="#">Dogodki</a></li>
+                        <li><a href="#">Trgovina</a></li>
+                        <li><a href="#">Izlet</a></li>
+                        <li>
+                            <a href="{% url 'profil' %}" title="Račun">
+                                <img class="circle minislikaracun right" src="{% static 'img/2015-trending-mens-haircuts-men39s-hairstyles-trends-for-2014-2015-givenchy-saint-laurent-Picture-HD-Wallpapers-Saamit.jpg' %}"
+                                /> Amadej
+                            </a>
+                            <a href="{% url 'profil' %}" title="Račun"></a>
+                        </li>
+                        <li><a href="#" title="Odjava"><i style="font-size: 13pt;" class="fa fa-sign-out" aria-hidden="true"></i></a></li>
+                        <li><a href="#modal1" class="waves-effect waves-light btn modal-trigger">Prijava</a></li>
+
+                    </ul>
+                    <!-- telefon meni -->
+                    <ul class="side-nav" id="mobile-demo">
+                        <li>
+                            <div class="userView">
+                                <div class="background">
+
+                                    <img class="responsive-img" src="{% static 'img/rsz_1rsz_suit-couple-blue-shoes.jpg' %}" />
+                                </div>
+                                <a href="{% url 'profil' %}">
+                                    <img class="circle minislikamenutele" src="{% static 'img/2015-trending-mens-haircuts-men39s-hairstyles-trends-for-2014-2015-givenchy-saint-laurent-Picture-HD-Wallpapers-Saamit.jpg' %}"
+                                    /></a>
+                                <a href="#" class="right" title="Odjava"><span class="white-text"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></span></a>
+                                <a href="{% url 'profil' %}"><span class="white-text name">Amadej Skornšek</span></a>
+                                <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+
+                            </div>
+                        </li>
+                        <li><a class='dropdown-button' href='#' data-beloworigin="true" data-activates='dropdown2'>Maturantski ples<i class="material-icons right ">arrow_drop_down</i></a></li>
+                        <li><a href="#">Dogodki</a></li>
+                        <li><a href="#">Trgovina</a></li>
+                        <li><a href="#">Izlet</a></li>
+
+
+                        <li>
+                            <div class="divider" style="width: 100%"></div>
+                        </li>
+                        <li><a href="#modal1" class="waves-effect waves-light modal-trigger">Prijava</a></li>
+
+                    </ul>
+
+
+
+
+
+                </div>
+
+
+            </div>
+
+
+
+        </nav>
+
+    </div>
+
+    <div id="search" class="row  ">
+
+        <div class="container">
+            <form method="get" action="https://www.google.com/search">
+                <input class="form-control" type="text" placeholder="Search ..." name="q"></input>
+                <input type="hidden" value="kesnroks.com" name="as_sitesearch"></input>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Dropdown Structure -->
+    <ul id='dropdown1' class='dropdown-content'>
+        <li><a href="{% url 'iskanje' %}">Iskanje soplesalcev</a></li>
+        <li><a href="#">Plesne šole</a></li>
+    </ul>
+    <ul id='dropdown2' class='dropdown-content'>
+        <li><a href="{% url 'iskanje' %}">Iskanje soplesalcev</a></li>
+        <li><a href="#">Plesne šole</a></li>
+    </ul>
+
+
+    <!--popup Login-->
+    <div id="modal1" class="modal ">
+        <div class="modal-content ">
+            <div class="row">
+                <div class="col s6">
+                    <h4>Prijava</h4>
+
+                </div>
+                <div class="s6 right">
+                    <a href="#!" class=" modal-action modal-close waves-effect waves-light btn-flat"><i class="fa fa-times" aria-hidden="true"></i></a>
+                </div>
+
+            </div>
+            <div class="row" id="prijava">
+                <div class="col s12 m6">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s12 ">
+                                <input id="email" type="email" class="validate" />
+                                <label for="email" data-error="Email ne ustreza">Email</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="password" type="password" class="validate" />
+                                <label for="password">Geslo</label>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="col s12">
+                        <a class="waves-effect waves-light btn" id="prijavabtn" style="display: block; width: 100%;">Prijava</a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col s12 m6 center" id="socialLogin">
+
+
+                    <div class="row">
+                        <div class="col s12 ">
+                            <a id="facebook" class="waves-effect waves-light btn" style="background: #3B5998">Facebook prijava  <i class="fa fa-facebook" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s12 ">
+                            <a id="google" class="waves-effect waves-light btn" style="background: #DD4B39">Google+ prijava <i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col s12 center">
+                    <a href="#modal2" class="waves-effect waves-ligh btn-flat modal-trigger">Registracija</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--RegPopup -->
+    <div id="modal2" class="modal">
+        <div class="modal-content ">
+            <div class=" row">
+
+
+                <div class="col s6">
+                    <h4>Registracija</h4>
+                </div>
+                <div class="s6 right">
+                    <a href="#!" class=" modal-action modal-close waves-effect waves-light btn-flat"><i class="fa fa-times" aria-hidden="true"></i></a>
+                </div>
+            </div>
+            <div class="row" id="reg">
+
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12 m6">
+                            <input id="imeReg" type="text" class="validate" />
+                            <label for="imeReg">Ime</label>
+                        </div>
+                        <div class="input-field col s12 m6">
+                            <input id="priimekReg" type="text" class="validate" />
+                            <label for="priimekReg">Priimek</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12 ">
+                            <input id="emailReg" type="email" class="validate" />
+                            <label for="emailReg" data-error="Email ne ustreza">Email</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12 ">
+                            <input id="passwordReg" type="password" class="validate" />
+                            <label for="passwordReg">Password</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12 ">
+                            <select>
+                                <option value="" disabled selected>Izberi spol</option>
+                                <option value="1">Moški</option>
+                                <option value="2">Ženski</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12 ">
+                            <a class="waves-effect waves-light btn" style="display: block; width: 100%;">Registracija</a>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+    <!--Vsebina podstrani MasterPage.master-->
+
+    {% block content %} {% endblock %}
+
+    <!--Noga / footer-->
+    <footer class="page-footer blue-grey darken-2">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">Maturanc noga</h5>
+                    <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+                </div>
+                <div class="col l4 offset-l2 s12">
+                    <h5 class="white-text">Socialna omrežja</h5>
+                    <ul>
+                        <li><a class="grey-text text-lighten-3" href="#!">Facebook</a></li>
+                        <li><a class="grey-text text-lighten-3" href="#!">Mail</a></li>
+                        <li><a class="grey-text text-lighten-3" href="#!">Snapchat</a></li>
+                        <li><a class="grey-text text-lighten-3" href="#!">Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright blue-grey darken-3">
+            <div class="container">
+                © 2016 Copyright Maturanc.com
+                <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+            </div>
+        </div>
+    </footer>
+
+    <!--Skripte-->
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+
+
+    <script src="{% static 'js/custom.js' %}"></script>
+    <script src="{% static 'js/noUiSlider.js' %}"></script>
+
+
+    <script>
+        $(document).ready(function () {
+
+            $('.modal-trigger').leanModal();
+            $('select').material_select();
+
+           
+            
+
+
+
+
+            var slider = document.getElementById('html5');
+
+            var skipValues = [
+            slider1Value = document.getElementById('slider1-span'),
+	        slider2Value = document.getElementById('slider2-span')
+            ];
+            function crossUpdate(value, slider) {
+
+                slider.noUiSlider.set(value);
+            }
+
+
+            noUiSlider.create(slider, {
+                start: [150, 190],
+                connect: true,
+                step: 5,
+                range: {
+                    'min': 100,
+                    'max': 260,
+                },
+                format: wNumb({
+                    decimals: 0
+                })
+            });
+
+            slider.noUiSlider.on('update', function (values, handle) {
+                skipValues[handle].innerHTML = values[handle];
+            });
+
+        });
+
+        // Toggle search
+
+        $('a#toggle-search').click(function () {
+            var search = $('div#search');
+
+            search.is(":visible") ? search.slideUp() : search.slideDown(function () {
+                search.find('input').focus();
+            });
+
+            return false;
+        });
+    </script>
+
+    <script>
+       
+        var app = angular.module('app', ['ngMaterial']);
+
+        app.controller('ctrl', ['$scope', '$filter', function ($scope, $filter) {
+            var allGroups = [
+            "Srednja šola za kemijo elektrotehniko in računalništvo",
+            "Srednja zdravstvena šola",
+            "Gimnazija Lava",
+            "Gimnazija Celje Center",
+            "Gimnazija Kajuh",
+            ];
+
+            $scope.queryGroups = function (search) {
+                var firstPass = $filter('filter')(allGroups, search);
+
+                return firstPass.filter(function (item) {
+                    return $scope.selectedGroups.indexOf(item) === -1;
+                });
+            };
+
+            $scope.addGroup = function (group) {
+                $scope.selectedGroups.push(group);
+            };
+
+            $scope.allGroups = allGroups;
+            $scope.selectedGroups = [allGroups[0]];
+
+            $scope.$watchCollection('selectedGroups', function () {
+                $scope.availableGroups = $scope.queryGroups('');
+            });
+        }]);
+    </script>
+
+
+</body>
+
+</html>

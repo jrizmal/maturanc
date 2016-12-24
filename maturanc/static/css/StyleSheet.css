@@ -1,0 +1,126 @@
+﻿.breadcrumb {
+    font-size: 10pt;
+}
+
+.parallax-container {
+    height: 750px;
+    opacity: 0.9;
+}
+
+.thin-text {
+    font-weight: 300;
+    background: rgba(158,158,158,.5);
+    padding: 50px;
+}
+/*gumbi barve*/
+.btn {
+    background: #BA0D0B;
+}
+
+    .btn:hover {
+        background: #d32f2f;
+    }
+/*dropdown text barva*/
+#meni .dropdown-content a {
+    color: #BA0B0B;
+}
+
+#searchcss i {
+    color: grey;
+}
+
+    #searchcss i:hover {
+        color: black;
+    }
+
+#searchfield {
+    width: 21vw;
+    height: 64px;
+}
+
+
+#socialmedia a {
+    color: black;
+}
+
+#profil a {
+    color: black;
+}
+
+#prijava .col .s12 {
+    padding: 0px;
+}
+
+#prijava .input-field {
+    margin: 0;
+}
+
+#prijava .btn {
+    display: block;
+    width: 100%;
+}
+
+#facebook {
+    margin: 13px 0px;
+}
+
+#google {
+    margin: 13px 0px;
+}
+
+#prijavabtn {
+    margin: 26px 0px;
+}
+
+.dropdown-content li span {
+    color: #BA0B0B;
+}
+
+.minislikaracun {
+    margin: 8px -8px 8px 8px;
+    object-fit: cover;
+    width: 46px;
+    height: 46px;
+}
+.minislikamenutele{
+    object-fit: cover;
+
+}
+
+h3 .material-icons {
+    margin: 1vw;
+}
+
+h4 .material-icons {
+    margin: 2%;
+    display: inline;
+}
+
+.editbtn3 {
+    margin: 30px 0 0 0;
+}
+
+.editbtn4 {
+    margin: 20px 0 0 0;
+}
+
+#reg .col .s12 {
+    padding: 0px 50px 0px 0px;
+}
+
+.truncate:hover {
+    overflow: visible;
+    white-space: normal;
+}
+
+#search {
+    display: none;
+    margin-bottom: 0px;
+    
+   
+}
+
+
+
+
+

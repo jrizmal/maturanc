@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="row">
+                <div class="col s12">
+                    <h4>Filter za iskanje soplesalcev</h4>
+                </div>
+            </div>
+            <div class="col s12 m2">
+
+                <div class="switch" style="padding-top: 20px">
+                    <label style="font-size: 13pt">
+                        Ženske
+                        <input type="checkbox" />
+                        <span class="lever"></span>
+                        Moške
+                    </label>
+                </div>
+            </div>
+            <div class="col s12 m5">
+                <div class="row">
+                                <div ng-app="app" ng-controller="ctrl">
+                <md-chips ng-model="selectedGroups" md-autocomplete-snap md-require-match="true">
+        <md-autocomplete 
+                         md-search-text="searchText"
+                         md-items="item in queryGroups(searchText)"
+                         md-item-text="item"
+                         md-autoselect="true"
+                         md-select-on-match="true"
+                         md-no-cache="true"
+                         md-require-match="true"
+                         placeholder="Išči po šoli...">
+            <span  md-highlight-text="searchText"></span>
+        </md-autocomplete>
+        <md-chip-template>
+            <span></span>
+        </md-chip-template>
+    </md-chips>
+            </div>
+                </div>
+            </div>
+            <div class="col s12 m5">
+                <label style="font-size: 13pt">Izberite višino:</label>
+                <div class="sliders" id="html5"></div>
+                <br />
+                <label>min: <span id="slider1-span"></span>cm</label><br />
+                <label>max: <span id="slider2-span"></span>cm</label>
+
+            </div>
+        </div>
+        <div class="row">
+            
+        </div>
+    </div>
+
+
+
+
+{% endblock %}

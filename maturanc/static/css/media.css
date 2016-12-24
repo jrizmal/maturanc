@@ -1,0 +1,56 @@
+﻿@media screen and (max-width:991px) {
+    body{
+        height:100%;
+    }
+    #okrogleslike {
+        object-fit: cover;
+        width: 50vw;
+        height: 50vw;
+        margin: 30px 0 0 0;
+    }
+
+    .modal {
+        width: 100% !important;
+        max-height: 100% !important;
+        top: 0 !important;
+        
+        
+    }
+    .modal .row{
+        margin:0px;
+    }
+
+
+    #socialmedia i {
+        font-size: 18pt;
+    }
+    #reg .col .s12{
+    padding:0px 0px 0px 0px;
+}
+}
+
+@media screen and (min-width:992px) {
+    #okrogleslike {
+        object-fit: cover;
+        width: 20vw;
+        height: 20vw;
+        margin: 2vw 0;
+    }
+
+
+
+    #modal1 {
+        width: 60vw;
+        
+    }
+
+    #modal2 {
+        width: 60vw;
+        
+    }
+
+
+    #socialLogin {
+        padding: 0 5%;
+    }
+}
