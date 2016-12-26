@@ -18,6 +18,7 @@ from django.contrib import admin
 import domov.views as domov_views
 import profil.views as profil_views
 import iskanje.views as iskanje_views
+from allauth.account.views import LoginView
 
 urlpatterns = [
     url(r'^profil/urejanje/', profil_views.urediProfil,name='urejanje_profila'),
@@ -25,5 +26,6 @@ urlpatterns = [
     url(r'^profil/', profil_views.profil,name='profil'),
     url(r'^iskanje/', iskanje_views.iskanje,name='iskanje'),
     url(r'^api/', include('api.urls'),name='api'),
+    url(r'^accounts/login/', LoginView,name='socialLogin'),
     url(r'', domov_views.domov,name='domov'),
 ]
