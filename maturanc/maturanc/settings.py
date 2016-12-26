@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'domov',
     'profil',
     'api',
+    'annoying',
 ]
 
 MIDDLEWARE = [

@@ -23,6 +23,7 @@
                 <div class="row">
                     <div class="col s12">
                         <ul class="collapsible" data-collapsible="accordion">
+                            
                             <li>
                                 <div class="collapsible-header active"><i class="fa fa-id-card" aria-hidden="true"></i>Podrobnejši podatki</div>
                                 <div class="collapsible-body">
@@ -30,60 +31,77 @@
                                     <div class="row" style="margin-bottom:0px; padding:0 5px">
                                         <div class="col s12">
                                             <div class="section">
+                                                {% if profil.sola != "" %}
                                                 <div class="row">
                                                     <div class="col s3 right-align">
                                                         Šola:
                                                     </div>
 
                                                     <div class="col s9 right truncate" >
-                                                        Srednja šola za kemijo elektrotehniko in računalništvo
+                                                        {{ profil.sola }}
                                                     </div>
                                                 </div>
+                                                {% endif %}
+                                                {% if profil.regija != "" %}
                                                 <div class="row">
                                                     <div class="col s3 right-align">
                                                         Regija:
                                                     </div>
 
                                                     <div class="col s9 right truncate" >
-                                                        Savinjska
+                                                        {{ profil.regija }}
                                                     </div>
                                                 </div>
+                                                {% endif %}
+                                                {% if profil.datum_plesa != null %}
                                                 <div class="row">
                                                     <div class="col s3 right-align">
                                                         Ples:
                                                     </div>
 
                                                     <div class="col s9 right">
-                                                        3.2.2017
+                                                        {{profil.datum_plesa}}
                                                     </div>
                                                 </div>
+                                                {% endif %}
+                                                {% if profil.starost != null %}
                                                 <div class="row">
                                                     <div class="col s3 right-align">
                                                         Starost:
                                                     </div>
 
                                                     <div class="col s9 right">
-                                                        18
+                                                        {{profil.starost}}
                                                     </div>
                                                 </div>
+                                                {% endif %}
+                                                {% if profil.spol != null %}
                                                 <div class="row">
                                                     <div class="col s3 right-align">
                                                         Spol:
                                                     </div>
 
                                                     <div class="col s9 right">
+                                                        {% if profil.spol == True %}
                                                         Moški
+                                                        {% else %}
+                                                        Ženski
+                                                        {% endif %}
                                                     </div>
                                                 </div>
+                                                {% endif %}
+                                                {% if profil.visina != null %}
                                                 <div class="row" style="margin-bottom:0px;">
                                                     <div class="col s3 right-align">
                                                         Višina:
                                                     </div>
 
                                                     <div class="col s9 right">
-                                                        180
+                                                        {{ profil.visina }}
                                                     </div>
                                                 </div>
+                                                {% endif %}
+                                                
 
                                             </div>
                                         </div>
@@ -95,7 +113,7 @@
                                 <div class="collapsible-header "><i class="fa fa-user" aria-hidden="true"></i>Bio</div>
                                 <div class="collapsible-body">
                                     <p>
-                                        It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                                        {{profil.bio}}
                                     </p>
                                 </div>
                             </li>
@@ -109,25 +127,36 @@
                         </div>
                         <div class="col s1"><a href="#"><i class="fa fa-pencil fa-2x  right editbtn4" aria-hidden="true"></i></a></div>-->
                                         <div class="section">
+                                            {% if social.facebook != "" %}
                                             <div class="col s2 center">
-                                                <a href="#!"><i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i></a>
+                                                <a href="{{social.facebook}}"><i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i></a>
                                             </div>
+                                            {% endif %}
+                                            {% if social.snapchat != "" %}
                                             <div class="col s2 center">
-                                                <a href="#!"><i class="fa fa-snapchat-square fa-3x" aria-hidden="true"></i></a>
+                                                <a href="{{social.snapchat}}"><i class="fa fa-snapchat-square fa-3x" aria-hidden="true"></i></a>
                                             </div>
+                                            {% endif %}
+                                            {% if social.instagram != "" %}
                                             <div class="col s2 center">
-                                                <a href="#!"><i class="fa fa-instagram fa-3x" aria-hidden="true"></i></a>
+                                                <a href="{{social.instagram}}"><i class="fa fa-instagram fa-3x" aria-hidden="true"></i></a>
                                             </div>
+                                            {% endif %}
+                                            {% if social.google != "" %}
                                             <div class="col s2 center">
-                                                <a href="#!"><i class="fa fa-google-plus fa-3x" aria-hidden="true"></i></a>
+                                                <a href="{{social.google}}"><i class="fa fa-google-plus fa-3x" aria-hidden="true"></i></a>
                                             </div>
-
+                                            {% endif %}
+                                            {% if social.twitter != "" %}
                                             <div class="col s2 center">
-                                                <a href="#!"><i class="fa fa-twitter fa-3x" aria-hidden="true"></i></a>
+                                                <a href="{{social.twitter}}"><i class="fa fa-twitter fa-3x" aria-hidden="true"></i></a>
                                             </div>
+                                            {% endif %}
+                                            {% if social.soundcloud != "" %}
                                             <div class="col s2 center">
-                                                <a href="#!"><i class="fa fa-soundcloud fa-3x" aria-hidden="true"></i></a>
+                                                <a href="{{social.soundcloud}}"><i class="fa fa-soundcloud fa-3x" aria-hidden="true"></i></a>
                                             </div>
+                                            {% endif %}
                                         </div>
 
                                     </div>
