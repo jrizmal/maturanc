@@ -1,104 +1,483 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} 
 
+{% block head %}
+    {% load static %}
+
+    <link href="{% static 'css/dropify.css' %}" rel="stylesheet" />
+
+{% endblock %}
+
+{% block content %}
+        <div>
+            
     <div class="container">
         <div class="row">
             <div class="col s12">
 
 
-
-                <div class="card">
-                    <div class="card-content">
-                        <span class="card-title">Iskanje soplesalcev
-                        <div class="switch right" style="display: inline">
-                            <label>
-                               OFF 
-                        <input type="checkbox" />
-                                <span class="lever"></span>
-                               ON
-                            </label>
-                        </div>
+                 <div class="card optioncard">
+                    <div class="card-content ">
+                        <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <span class="card-title">Profilna slika
+                        
                         </span>
+                        <!--naslov kartice-->
+                        <div class="divider" style="width: 100%; margin-bottom:30px"></div>
+                        <div class="row">
+                            <div class="col s12">
+                                
+                                <input type="file" class="dropify" id="id_slika" name="slika" data-max-file-size="3M" data-allowed-file-extensions="jpg png jpeg" />
+                            </div>
+
+                        </div>                         
+                       
+                        <div class="row">
+                            <div class="col s12" style="margin-top:10px">
+                                <button type="submit" class="waves-effect waves-light btn right">Naloži</button>
+                            </div>
+                             
+                        </div>
+                        </form>
+                        </div>
+                    </div>
+            
+
+
+
+                <!--Iskanje soplesalcev funkcija za urejanje profila-->
+                <div class="card optioncard">
+                    <div class="card-content ">
+                        <span class="card-title">Iskanje soplesalcev
+                        <!--<div class="switch right" style="display: inline">
+                            <label>
+                                OFF 
+                        <input type="checkbox" id="swiskanjesoplesalcev" />
+                                <span class="lever"></span>
+                                ON
+                            </label>
+                        </div>-->
+                        </span>
+                        <!--naslov kartice-->
                         <div class="divider" style="width: 100%"></div>
 
+                        <form method="POST" action="shrani/">{% csrf_token %}
+                        <div id="iskanjesoplesalcevform">
+                            <!--Hide div-->
+                            <!--Šola-->
+                            <div class="row">
+                                <div class="col s12">
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <textarea name="bio" id="textarea1" class="materialize-textarea" length="1000">{{ request.user.profil.bio }}</textarea>
+                                            <label for="textarea1">Bio</label>
+                                        </div>
+                                    </div>
+                                </div>
 
-                        
-                            
-                        
-                            
-                        
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m12 ">
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <input name="sola" type="text" id="sola_autocompletejq" value="{{ request.user.profil.sola }}">
+                                            <label for="sola_autocompletejq">Izberi šolo</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                var sole = ["Biotehniški center Naklo",
+                                            "Biotehniški center Naklo, Srednja šola",
+                                            "Ekonomska gimnazija in srednja šola Radovljica",
+                                            "Gimnazija Franceta Prešerna",
+                                            "Gimnazija Jesenice",
+                                            "Gimnazija Kranj",
+                                            "Gimnazija Škofja Loka",
+                                            "Srednja gostinska in turistična šola Radovljica",
+                                            "Srednja šola Jesenice",
+                                            "Šolski center Kranj",
+                                            "Šolski center Kranj, Srednja ekonomska, storitvena in gradbena šola",
+                                            "Šolski center Kranj, Srednja tehniška šola",
+                                            "Šolski center Kranj, Strokovna gimnazija",
+                                            "Šolski center Škofja Loka",
+                                            "Šolski center Škofja Loka, Srednja šola za lesarstvo",
+                                            "Šolski center Škofja Loka, Srednja šola za strojništvo",
+                                            "Gimnazija Jurija Vege Idrija",
+                                            "Gimnazija Nova Gorica",
+                                            "Gimnazija Tolmin",
+                                            "Srednja šola Veno Pilon Ajdovščina",
+                                            "Škofijska gimnazija Vipava",
+                                            "Šolski center Nova Gorica",
+                                            "Šolski center Nova Gorica, Biotehniška šola",
+                                            "Šolski center Nova Gorica, Elektrotehniška in računalniška šola",
+                                            "Šolski center Nova Gorica, Gimnazija in zdravstvena šola",
+                                            "Šolski center Nova Gorica, Srednja ekonomska in trgovska šola",
+                                            "Šolski center Nova Gorica, Strojna, prometna in lesarska šola",
+                                            "Ekonomska šola Novo mesto, Srednja šola in gimnazija",
+                                            "Gimnazija in srednja šola Kočevje",
+                                            "Gimnazija Novo mesto",
+                                            "Grm Novo mesto - center biotehnike in turizma",
+                                            "Grm Novo mesto - center biotehnike in turizma, Kmetijska šola Grm in biotehniška gimnazija",
+                                            "Grm Novo mesto - center biotehnike in turizma, Srednja šola za gostinstvo in turizem",
+                                            "Srednja šola Črnomelj",
+                                            "Šolski center Novo mesto, Srednja elektro šola in tehniška gimnazija",
+                                            "Šolski center Novo mesto, Srednja gradbena, lesarska in vzgojiteljska šola",
+                                            "Šolski center Novo mesto, Srednja strojna šola",
+                                            "Šolski center Novo mesto, Srednja zdravstvena in kemijska šola",
+                                            "Šolski center Ravne na Koroškem",
+                                            "Šolski center Ravne na Koroškem, Gimnazija",
+                                            "Šolski center Ravne na Koroškem, Srednja šola",
+                                            "Šolski center Slovenj Gradec",
+                                            "Šolski center Slovenj Gradec, Gimnazija",
+                                            "Šolski center Slovenj Gradec, Srednja šola Slovenj Gradec in Muta",
+                                            "Šolski center Slovenj Gradec, Srednja zdravstvena šola",
+                                            "Gimnazija Antonio Sema Piran",
+                                            "Gimnazija, elektro in pomorska šola Piran",
+                                            "Gimnazija Gian Rinaldo Carli Koper",
+                                            "Gimnazija Koper",
+                                            "Srednja ekonomsko - poslovna šola Koper",
+                                            "Srednja šola Izola",
+                                            "Srednja šola Pietro Coppo Izola",
+                                            "Srednja tehniška šola Koper",
+                                            "Šolski center Srečka Kosovela Sežana",
+                                            "Šolski center Srečka Kosovela Sežana, Gimnazija in ekonomska šola",
+                                            "Biotehniški izobraževalni center Ljubljana",
+                                            "Biotehniški izobraževalni center Ljubljana, Gimnazija in veterinarska šola",
+                                            "Biotehniški izobraževalni center Ljubljana, Živilska šola",
+                                            "Center za izobraževanje, rehabilitacijo in usposabljanje Kamnik, Srednja šola",
+                                            "Ekonomska šola Ljubljana",
+                                            "Elektrotehniško-računalniška strokovna šola in gimnazija Ljubljana",
+                                            "Gimnazija Bežigrad",
+                                            "Gimnazija Bežigrad, Gimnazija",
+                                            "Gimnazija Bežigrad, Mednarodna šola",
+                                            "Gimnazija in srednja šola Rudolfa Maistra Kamnik",
+                                            "Gimnazija Jožeta Plečnika Ljubljana",
+                                            "Gimnazija Ledina",
+                                            "Gimnazija Moste",
+                                            "Gimnazija Poljane",
+                                            "Gimnazija Šentvid",
+                                            "Gimnazija Šiška",
+                                            "Gimnazija Vič",
+                                            "Konservatorij za glasbo in balet Ljubljana",
+                                            "Konservatorij za glasbo in balet Ljubljana, Srednja glasbena in baletna šola",
+                                            "Srednja ekonomska šola Ljubljana",
+                                            "Srednja frizerska šola Ljubljana",
+                                            "Srednja gradbena, geodetska in okoljevarstvena šola Ljubljana",
+                                            "Srednja medijska in grafična šola Ljubljana",
+                                            "Srednja poklicna in strokovna šola Bežigrad-Ljubljana",
+                                            "Srednja poklicna in strokovna šola Bežigrad-Ljubljana, Srednja poklicna in strokovna šola Bežigrad",
+                                            "Srednja šola Domžale",
+                                            "Srednja šola Domžale, Gimnazija",
+                                            "Srednja šola Domžale, Poklicna in strokovna šola",
+                                            "Srednja šola Josipa Jurčiča Ivančna Gorica",
+                                            "Srednja šola tehniških strok Šiška",
+                                            "Srednja šola za farmacijo, kozmetiko in zdravstvo",
+                                            "Srednja šola za gostinstvo in turizem v Ljubljani",
+                                            "Srednja šola za oblikovanje in fotografijo Ljubljana",
+                                            "Srednja trgovska šola Ljubljana",
+                                            "Srednja upravno administrativna šola Ljubljana",
+                                            "Srednja vzgojiteljska šola in gimnazija Ljubljana",
+                                            "Srednja zdravstvena šola Ljubljana",
+                                            "Šolski center Ljubljana",
+                                            "Šolski center Ljubljana, Gimnazija Antona Aškerca",
+                                            "Šolski center Ljubljana, Srednja lesarska šola",
+                                            "Šolski center Ljubljana, Srednja strojna in kemijska šola",
+                                            "Šolski center za pošto, ekonomijo in telekomunikacije Ljubljana",
+                                            "Šolski center za pošto, ekonomijo in telekomunikacije Ljubljana, Srednja tehniška in strokovna šola",
+                                            "Zavod sv. Frančiška Saleškega Gimnazija Želimlje",
+                                            "Zavod sv. Stanislava",
+                                            "Zavod sv. Stanislava, Škofijska klasična gimnazija",
+                                            "Biotehniška šola Maribor",
+                                            "Gimnazija in srednja kemijska šola Ruše",
+                                            "Gimnazija Ormož",
+                                            "Gimnazija Ptuj",
+                                            "II. gimnazija Maribor",
+                                            "III. gimnazija Maribor",
+                                            "Izobraževalni center Piramida Maribor",
+                                            "Izobraževalni center Piramida Maribor, Srednja šola za prehrano in živilstvo",
+                                            "Konservatorij za glasbo in balet Maribor",
+                                            "Lesarska šola Maribor",
+                                            "Lesarska šola Maribor, Srednja šola",
+                                            "Prometna šola Maribor",
+                                            "Prometna šola Maribor, Srednja prometna šola in dijaški dom",
+                                            "Prva gimnazija Maribor",
+                                            "Srednja ekonomska šola Maribor",
+                                            "Srednja elektro-računalniška šola Maribor",
+                                            "Srednja gradbena šola in gimnazija Maribor",
+                                            "Srednja šola Slovenska Bistrica",
+                                            "Srednja šola za gostinstvo in turizem Maribor",
+                                            "Srednja šola za oblikovanje Maribor",
+                                            "Srednja trgovska šola Maribor",
+                                            "Srednja zdravstvena in kozmetična šola Maribor",
+                                            "Šolski center Ptuj",
+                                            "Šolski center Ptuj, Biotehniška šola",
+                                            "Šolski center Ptuj, Ekonomska šola",
+                                            "Šolski center Ptuj, Elektro in računalniška šola",
+                                            "Šolski center Ptuj, Strojna šola",
+                                            "Tehniški šolski center Maribor",
+                                            "Tehniški šolski center Maribor, Srednja strojna šola",
+                                            "Zavod Antona Martina Slomška",
+                                            "Zavod Antona Martina Slomška, Škofijska gimnazija Antona Martina Slomška",
+                                            "Biotehniška šola Rakičan",
+                                            "Dvojezična srednja šola Lendava",
+                                            "Ekonomska šola Murska Sobota",
+                                            "Ekonomska šola Murska Sobota, Srednja šola in gimnazija",
+                                            "Gimnazija Franca Miklošiča Ljutomer",
+                                            "Gimnazija Murska Sobota",
+                                            "Srednja poklicna in tehniška šola Murska Sobota",
+                                            "Srednja šola za gostinstvo in turizem Radenci",
+                                            "Srednja zdravstvena šola Murska Sobota",
+                                            "Ekonomska in trgovska šola Brežice",
+                                            "Ekonomska in trgovska šola Brežice, Poklicna in strokovna šola",
+                                            "Gimnazija Brežice",
+                                            "Šolski center Krško - Sevnica",
+                                            "Šolski center Krško - Sevnica, Gimnazija Krško",
+                                            "Šolski center Krško - Sevnica, Srednja poklicna in strokovna šola Krško",
+                                            "Šolski center Krško - Sevnica, Srednja šola Sevnica",
+                                            "Srednja gozdarska in lesarska šola Postojna",
+                                            "Šolski center Postojna",
+                                            "Šolski center Postojna, Gimnazija Ilirska Bistrica",
+                                            "Šolski center Postojna, Srednja šola",
+                                            "Ekonomska šola Celje",
+                                            "Ekonomska šola Celje, Gimnazija in srednja šola",
+                                            "Gimnazija Celje - Center",
+                                            "I. gimnazija v Celju",
+                                            "Srednja šola za gostinstvo in turizem Celje",
+                                            "Srednja zdravstvena šola Celje",
+                                            "Šola za hortikulturo in vizualne umetnosti Celje",
+                                            "Šola za hortikulturo in vizualne umetnosti Celje, Srednja poklicna in strokovna šola",
+                                            "Šolski center Celje",
+                                            "Šolski center Celje, Gimnazija Lava",
+                                            "Šolski center Celje, Srednja šola za gradbeništvo in varovanje okolja",
+                                            "Šolski center Celje, Srednja šola za kemijo, elektrotehniko in računalništvo",
+                                            "Šolski center Celje, Srednja šola za storitvene dejavnosti in logistiko",
+                                            "Šolski center Celje, Srednja šola za strojništvo, mehatroniko in medije",
+                                            "Šolski center Rogaška Slatina",
+                                            "Šolski center Slovenske Konjice - Zreče",
+                                            "Šolski center Slovenske Konjice - Zreče, Gimnazija Slovenske Konjice",
+                                            "Šolski center Slovenske Konjice - Zreče, Srednja poklicna in strokovna šola Zreče",
+                                            "Šolski center Šentjur",
+                                            "Šolski center Šentjur, Srednja poklicna in strokovna šola",
+                                            "Šolski center Velenje",
+                                            "Šolski center Velenje, Elektro in računalniška šola",
+                                            "Šolski center Velenje, Gimnazija",
+                                            "Šolski center Velenje, Strojna šola",
+                                            "Šolski center Velenje, Šola za rudarstvo in varstvo okolja",
+                                            "Šolski center Velenje, Šola za storitvene dejavnosti",
+                                            "Gimnazija in ekonomska srednja šola Trbovlje",
+                                            "Gimnazija Litija",
+                                            "Srednja šola Zagorje",
+                                            "Srednja tehniška in poklicna šola Trbovlje"
+                                ];
+
+                                $('#sola_autocompletejq').autocompletejq({
+                                    lookup: sole
+
+                                });
+                            </script>
+
+                            <!--regija-->
+                            <div class="row">
+                                <div class="col s12 m12 ">
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <input name="regija" type="text" id="regija_autocompletejq" value="{{ request.user.profil.regija }}"/>
+                                            <label for="regija_autocompletejq">Izberi Regijo</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                var regije = ["Pomurska", "Podravska", "Koroška", "Savinjska", "Zasavska", "Spodnjeposavska", "Jugovzhodna Slovenija", "Osrednjeslovenska", "Gorenjska", "Notranjsko-kraška", "Goriška", "Obalno-kraška"];
+
+                                $('#regija_autocompletejq').autocompletejq({
+                                    lookup: regije
+
+                                });
+                            </script>
+                            <div class="row">
+                                <div class="input-field col s12 m12">
+                                    <select name="spol">
+                                        
+                                        {% if request.user.profil.spol is True %}
+                                            <option value="" disabled>Izberi spol</option>
+                                            <option value="1" selected>Moški</option>
+                                            <option value="2" >Ženski</option>
+                                        {% elif request.user.profil.spol is False %}
+                                            <option value="" disabled>Izberi spol</option>
+                                            <option value="1" >Moški</option>
+                                            <option value="2" selected>Ženski</option>
+                                        {% else %}
+                                            <option value="" disabled selected>Izberi spol</option>
+                                            <option value="1" >Moški</option>
+                                            <option value="2" >Ženski</option>
+                                        {% endif %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12" style="margin-top: 30px">
+                                    <div class="row">
+                                        <div class="inputnaslov col s12 m12">
+                                            <label>Izberi višino</label>
+                                            <p class="range-field">
+                                                <input name="visina" type="range" id="test5" min="95" max="260" value="{{request.user.profil.visina}}"/>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m12 ">
+                                    
+                                    <label>Izberi datum plesa</label>
+                                    <input name="datum_plesa" type="date" class="datepicker" id="datumplesa">
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m12 ">
+                                    <label>Starost</label>
+                                    <input name="starost" type="number"  id="leto_rojstva" value="{{request.user.profil.starost}}">
+                                </div>
+                            </div>
 
 
 
+                            <div class="row">
+                                <div class="col s12">
+                                    <button class="waves-effect waves-light btn right" type="submit">Shrani spremembe</button>
+                                    
+                                </div>
+                            </div>
 
+
+                        </div>
+                        </form>
                     </div>
                 </div>
+                <!--socialna omrežja funkcija-->
                 <div class="card">
                     <div class="card-content">
                         <span class="card-title">Socialna omrežja
                         <div class="switch right" style="display: inline">
                             <label>
-                               OFF 
-                        <input type="checkbox" />
+                                OFF 
+                        <input type="checkbox" id="swsocialnaomrezja" />
                                 <span class="lever"></span>
-                               ON
+                                ON
                             </label>
                         </div>
                         </span>
+                        <!--naslov kartice-->
                         <div class="divider" style="width: 100%"></div>
 
-
-
-
-
-
-
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-content">
-                        <span class="card-title">Prodaja
-                        <div class="switch right" style="display: inline">
-                            <label>
-                               OFF 
-                        <input type="checkbox" />
-                                <span class="lever"></span>
-                               ON
-                            </label>
-                        </div>
-                        </span>
-                        <div class="divider" style="width: 100%"></div>
-                        <p><h1>Test</h1></p>
-
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-content">
-                        <span class="card-title">Profilna slika
-                        </span>
-                        <div class="divider" style="width: 100%"></div>
-
-
-                        <form class="col s12">
+                        <div id="socialnaomrezja">
+                            <!--Hide div-->
                             <div class="row">
-                                
-                                
+
+                                <div class="col s12">
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <i class="fa fa-facebook-official prefix" aria-hidden="true"></i>
+                                            <input id="icon_prefix" type="text" class="validate">
+                                            <label for="icon_prefix">Facebook</label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </form>
-                        {% load static %}
-                                <form method="post" enctype="multipart/form-data">
-                                    {% csrf_token %}
-                                    {{ form.as_p }}
-                                    <br/>
-                                    <button type="submit" class="waves-effect waves-light btn">Upload</button>
-                                </form>
-                                <img id="okrogleslike" class="circle responsive-img" src="{{ request.user.profilnaslika.slika.url }}" />
-                                
-                                
+                            <div class="row">
+
+                                <div class="col s12">
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <i class="fa fa-snapchat-square prefix" aria-hidden="true"></i>
+                                            <input id="icon_prefix" type="text" class="validate">
+                                            <label for="icon_prefix">Snapchat</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col s12">
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <i class="fa fa-instagram prefix" aria-hidden="true"></i>
+                                            <input id="icon_prefix" type="text" class="validate">
+                                            <label for="icon_prefix">Instagram</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col s12">
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <i class="fa fa-google-plus prefix" aria-hidden="true"></i>
+                                            <input id="icon_prefix" type="text" class="validate">
+                                            <label for="icon_prefix">Google+</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col s12">
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <i class="fa fa-twitter prefix " aria-hidden="true"></i>
+                                            <input id="icon_prefix" type="text" class="validate">
+                                            <label for="icon_prefix">Twitter</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col s12">
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <i class="fa fa-soundcloud prefix" aria-hidden="true"></i>
+                                            <input id="icon_prefix" type="text" class="validate">
+                                            <label for="icon_prefix">Soundcloud</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+
+
+                        </div>
+                        
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 
+        </div>
+        <script>
+        $(document).ready(function () {
+            var picker = $('#datumplesa').pickadate({
+                format: 'dddd, dd/mm/yyyy',
+                formatSubmit: 'yyyy-mm-dd',
+                selectMonths: true,
+                selectYears: 2,
+                {% if request.user.profil.datum_plesa is not None %}
+                onStart: function(){
+                    this.set('select', '{{request.user.profil.datum_plesa|date:"Y-m-d"}}', { format: 'yyyy-mm-dd' });
+                },
+                {% endif %}
+            });
+
+            
+
+            //picker.set('select', '{{request.user.profil.datum_plesa|date:"Y-n-j"}}');
+        });
+        </script>
+        
 {% endblock %}

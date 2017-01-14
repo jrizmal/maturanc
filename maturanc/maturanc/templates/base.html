@@ -8,18 +8,12 @@
         crossorigin="anonymous">
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
     
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="{% static 'js/jquery.autocomplete.js' %}"></script>
 
     <link href="{% static 'css/StyleSheet.css' %}" rel="stylesheet" />
     <link href="{% static 'css/media.css' %}" rel="stylesheet" />
     <link href="{% static 'css/listInput.css' %}" rel="stylesheet" />
     <link href="{% static 'css/noUislider.css' %}" rel="stylesheet" />
-    <link href="{% static 'css/autocompletejq.css' %}" rel="stylesheet" />
-    
-    {% block head %}
-    {% endblock %}
-    <meta name="theme-color" content="#455A64">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 </head>
 
@@ -32,7 +26,7 @@
             <div class="nav-wrapper blue-grey darken-2 ">
                 <div class="container">
                     <a href="{% url 'domov' %}" class="brand-logo">Maturanc</a>
-                    <a data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
 
                     <ul class="right hide-on-med-and-down">
@@ -46,25 +40,19 @@
                         <li><a href="#">Dogodki</a></li>
                         <li><a href="#">Trgovina</a></li>
                         <li><a href="#">Izlet</a></li>
-                        {% if request.user.is_authenticated %}
                         <li>
                             <a href="{% url 'profil' %}" title="Račun">
-                                <img class="circle minislikaracun right" src="{{ request.user.profilnaslika.slika.url }}"
-                                /> {{user.first_name}} {{user.last_name}}
+                                <img class="circle minislikaracun right" src="{% static 'img/2015-trending-mens-haircuts-men39s-hairstyles-trends-for-2014-2015-givenchy-saint-laurent-Picture-HD-Wallpapers-Saamit.jpg' %}"
+                                /> Amadej
                             </a>
                             <a href="{% url 'profil' %}" title="Račun"></a>
                         </li>
-                        
-                        
-                        <li><a href="#" title="Odjava" id="odjavaButton"><i style="font-size: 13pt;" class="fa fa-sign-out" aria-hidden="true"></i></a></li>
-                        {% else %}
-                        
+                        <li><a href="#" title="Odjava"><i style="font-size: 13pt;" class="fa fa-sign-out" aria-hidden="true"></i></a></li>
                         <li><a href="#modal1" class="waves-effect waves-light btn modal-trigger">Prijava</a></li>
-                        {% endif %}
+
                     </ul>
                     <!-- telefon meni -->
                     <ul class="side-nav" id="mobile-demo">
-                        {% if request.user.is_authenticated %}
                         <li>
                             <div class="userView">
                                 <div class="background">
@@ -72,31 +60,24 @@
                                     <img class="responsive-img" src="{% static 'img/rsz_1rsz_suit-couple-blue-shoes.jpg' %}" />
                                 </div>
                                 <a href="{% url 'profil' %}">
-                                    <img class="circle minislikamenutele" src="{{ request.user.profilnaslika.slika.url }}"
+                                    <img class="circle minislikamenutele" src="{% static 'img/2015-trending-mens-haircuts-men39s-hairstyles-trends-for-2014-2015-givenchy-saint-laurent-Picture-HD-Wallpapers-Saamit.jpg' %}"
                                     /></a>
-                                <a href="#" class="right" title="Odjava" id="odjavaButton"><span class="white-text"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></span></a>
-                                <a href="{% url 'profil' %}"><span class="white-text name">{{user.first_name}} {{user.last_name}}</span></a>
-                                <a href="{% url 'profil' %}"><span class="white-text email">{{user.email}}</span></a>
+                                <a href="#" class="right" title="Odjava"><span class="white-text"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></span></a>
+                                <a href="{% url 'profil' %}"><span class="white-text name">Amadej Skornšek</span></a>
+                                <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
 
                             </div>
                         </li>
-                        {% endif %}
                         <li><a class='dropdown-button' href='#' data-beloworigin="true" data-activates='dropdown2'>Maturantski ples<i class="material-icons right ">arrow_drop_down</i></a></li>
                         <li><a href="#">Dogodki</a></li>
                         <li><a href="#">Trgovina</a></li>
                         <li><a href="#">Izlet</a></li>
 
-                        {% if user.is_authenticated %}
-                        <li>
-                            <div class="divider" style="width: 100%"></div>
-                        </li>
-                        <li><a href="#" id="odjavaButton">Odjava</a></li>
-                        {% else %}
+
                         <li>
                             <div class="divider" style="width: 100%"></div>
                         </li>
                         <li><a href="#modal1" class="waves-effect waves-light modal-trigger">Prijava</a></li>
-                        {% endif %}
 
                     </ul>
 
@@ -179,14 +160,13 @@
 
                     <div class="row">
                         <div class="col s12 ">
-                            {% load socialaccount %}
-                            <a href="{% provider_login_url "facebook" method="oauth2" %}"id="facebook" class="waves-effect waves-light btn" style="background: #3B5998">Facebook prijava  <i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            <a id="facebook" class="waves-effect waves-light btn" style="background: #3B5998">Facebook prijava  <i class="fa fa-facebook" aria-hidden="true"></i></a>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col s12 ">
-                            <a href="{% provider_login_url "google" %}" id="google" class="waves-effect waves-light btn" style="background: #DD4B39">Google+ prijava <i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                            <a id="google" class="waves-effect waves-light btn" style="background: #DD4B39">Google+ prijava <i class="fa fa-google-plus" aria-hidden="true"></i></a>
                         </div>
                     </div>
 
@@ -303,7 +283,7 @@
 
     <!--Skripte-->
 
-    
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
@@ -316,42 +296,16 @@
 
     <script src="{% static 'js/custom.js' %}"></script>
     <script src="{% static 'js/noUiSlider.js' %}"></script>
-    <script src="{% static 'js/prijava.js' %}"></script>
-    <script src="{% static 'js/masonry.pkgd.js' %}"></script>
-    <script src="{% static 'js/dropify.js' %}"></script>
-    <script src="{% static 'js/jquery.autocomplete.js' %}"></script>
+
 
     <script>
         $(document).ready(function () {
-            Materialize.updateTextFields();
 
             $('.modal-trigger').leanModal();
             $('select').material_select();
 
-            //  $('#swiskanjesoplesalcev').click(function () {
-            //    $('#iskanjesoplesalcevform').toggleClass('hide');
-            // });
-
-            //        $('#swsocialnaomrezja').click(function () {
-            //          $('#socialnaomrezja').toggleClass('hide');
-            //    });
-
-            $('.searchresult').masonry({
-                itemSelector: '.gridKartice',
-
-
-            });
-
-            $('.dropify').dropify({
-                messages: {
-                    'default': 'Povleci in spusti sliko sem ali klikni tukaj',
-                    'replace': 'Povleci in spusti sliko sem ali klikni tukaj če želiš zamenjati sliko',
-                    'remove': 'Odstrani',
-                    'error': 'Nekaj se je zalomilo.'
-                }
-            })
            
-
+            
 
 
 
@@ -398,6 +352,40 @@
 
             return false;
         });
+    </script>
+
+    <script>
+       
+        var app = angular.module('app', ['ngMaterial']);
+
+        app.controller('ctrl', ['$scope', '$filter', function ($scope, $filter) {
+            var allGroups = [
+            "Srednja šola za kemijo elektrotehniko in računalništvo",
+            "Srednja zdravstvena šola",
+            "Gimnazija Lava",
+            "Gimnazija Celje Center",
+            "Gimnazija Kajuh",
+            ];
+
+            $scope.queryGroups = function (search) {
+                var firstPass = $filter('filter')(allGroups, search);
+
+                return firstPass.filter(function (item) {
+                    return $scope.selectedGroups.indexOf(item) === -1;
+                });
+            };
+
+            $scope.addGroup = function (group) {
+                $scope.selectedGroups.push(group);
+            };
+
+            $scope.allGroups = allGroups;
+            $scope.selectedGroups = [allGroups[0]];
+
+            $scope.$watchCollection('selectedGroups', function () {
+                $scope.availableGroups = $scope.queryGroups('');
+            });
+        }]);
     </script>
 
 

@@ -1,0 +1,104 @@
+{% extends 'base.html' %} {% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+
+
+
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">Iskanje soplesalcev
+                        <div class="switch right" style="display: inline">
+                            <label>
+                               OFF 
+                        <input type="checkbox" />
+                                <span class="lever"></span>
+                               ON
+                            </label>
+                        </div>
+                        </span>
+                        <div class="divider" style="width: 100%"></div>
+
+
+                        
+                            
+                        
+                            
+                        
+
+
+
+
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">Socialna omrežja
+                        <div class="switch right" style="display: inline">
+                            <label>
+                               OFF 
+                        <input type="checkbox" />
+                                <span class="lever"></span>
+                               ON
+                            </label>
+                        </div>
+                        </span>
+                        <div class="divider" style="width: 100%"></div>
+
+
+
+
+
+
+
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">Prodaja
+                        <div class="switch right" style="display: inline">
+                            <label>
+                               OFF 
+                        <input type="checkbox" />
+                                <span class="lever"></span>
+                               ON
+                            </label>
+                        </div>
+                        </span>
+                        <div class="divider" style="width: 100%"></div>
+                        <p><h1>Test</h1></p>
+
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">Profilna slika
+                        </span>
+                        <div class="divider" style="width: 100%"></div>
+
+
+                        <form class="col s12">
+                            <div class="row">
+                                
+                                
+                            </div>
+                        </form>
+                        {% load static %}
+                                <form method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    {{ form.as_p }}
+                                    <br/>
+                                    <button type="submit" class="waves-effect waves-light btn">Upload</button>
+                                </form>
+                                <img id="okrogleslike" class="circle responsive-img" src="{{ request.user.profilnaslika.slika.url }}" />
+                                
+                                
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

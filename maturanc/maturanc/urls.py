@@ -26,6 +26,7 @@ import profil
 urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
 	url(r'^profil/urejanje/$', profil_views.urediProfil,name='urejanje_profila'),
+    url(r'^profil/urejanje/shrani/$', profil_views.shraniSpremembe,name='shrani_spremembe'),
     url(r'^admin/', admin.site.urls),
     url(r'^profil/$', profil_views.profil,name='profil'),
     url(r'^iskanje/$', iskanje_views.iskanje,name='iskanje'),

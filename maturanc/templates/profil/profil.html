@@ -60,7 +60,7 @@
                                                     </div>
 
                                                     <div class="col s9 right">
-                                                        {{profil.datum_plesa}}
+                                                        {{profil.datum_plesa|date:"d.m.Y"}}
                                                     </div>
                                                 </div>
                                                 {% endif %}
@@ -109,7 +109,7 @@
 
                                 </div>
                             </li>
-                            {% if profil.bio != "" %}
+                            {% if profil.bio != "" and profil.bio is not None %}
                             <li>
                                 <div class="collapsible-header "><i class="fa fa-user" aria-hidden="true"></i>Bio</div>
                                 <div class="collapsible-body">
@@ -323,7 +323,7 @@
                                                     </div>
 
                                                     <div class="col s9 right">
-                                                        {{profil.datum_plesa}}
+                                                        {{profil.datum_plesa|date:"d.m.Y"}}
                                                     </div>
                                                 </div>
                                                 {% endif %}
@@ -372,7 +372,7 @@
 
                                 </div>
                             </li>
-                            {% if profil.bio != "" %}
+                            {% if profil.bio != "" and profil.bio is not None %}
                             <li>
                                 <div class="collapsible-header "><i class="fa fa-user" aria-hidden="true"></i>Bio</div>
                                 <div class="collapsible-body">

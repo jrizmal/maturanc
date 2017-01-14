@@ -1,0 +1,72 @@
+{% extends 'base.html' %} {% block content %}
+
+
+{% load static %}
+        <!--Banner parallax-->
+        <div class="parallax-container valign-wrapper">
+            <div class="container">
+                <div style="height: 300px;">
+                    <div class="row">
+                        <div class="col 18 s12 white-text">
+
+                            <h4 class="thin-text valign center" id="homebox">Želiš plesati na maturancu pa nimaš soplesalca?</h4>
+                            <div class="center"><a href="" class="waves-effect waves-light btn">Poišči soplesalca</a></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="parallax">
+                <img src="{% static 'domov/img/plesnipar.jpg' %}">
+            </div>
+        </div>
+
+        <div class="section white">
+            <div class="row container">
+                <h2 class="header">Storitve</h2>
+                <p class="grey-text text-darken-3 lighten-3">Ta stran je namenjena maturantom in poskuša zmanjšati nekatere probleme.</p>
+            </div>
+        </div>
+
+
+        <div class="container" id="storitve">
+            <div class="row">
+                <div class="col s12 m4">
+                    <div class="card blue-grey darken-1 z-depth-2">
+                        <div class="card-content white-text">
+                            <h3 class="center-align"><i class="fa fa-shopping-cart fa-3x" aria-hidden="true"></i></h3>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">Oblačila</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m4">
+                    <div class="card blue-grey darken-1 z-depth-2">
+                        <div class="card-content white-text">
+                            <h3 class="center-align"><i class="fa fa-plane fa-3x" aria-hidden="true"></i></h3>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">Izleti</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m4">
+                    <div class="card blue-grey darken-1 z-depth-2">
+                        <div class="card-content white-text">
+                            <h3 class="center-align"><i class="fa fa-users fa-3x" aria-hidden="true"></i></h3>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">Plesne vaje</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+    {% endblock %}
