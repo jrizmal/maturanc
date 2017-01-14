@@ -26,7 +26,7 @@
             <div class="nav-wrapper blue-grey darken-2 ">
                 <div class="container">
                     <a href="{% url 'domov' %}" class="brand-logo">Maturanc</a>
-                    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                    <a data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
 
                     <ul class="right hide-on-med-and-down">
@@ -43,7 +43,7 @@
                         {% if request.user.is_authenticated %}
                         <li>
                             <a href="{% url 'profil' %}" title="Račun">
-                                <img class="circle minislikaracun right" src="{% static 'img/2015-trending-mens-haircuts-men39s-hairstyles-trends-for-2014-2015-givenchy-saint-laurent-Picture-HD-Wallpapers-Saamit.jpg' %}"
+                                <img class="circle minislikaracun right" src="{{ request.user.profilnaslika.slika.url }}"
                                 /> {{user.first_name}} {{user.last_name}}
                             </a>
                             <a href="{% url 'profil' %}" title="Račun"></a>
@@ -58,6 +58,7 @@
                     </ul>
                     <!-- telefon meni -->
                     <ul class="side-nav" id="mobile-demo">
+                        {% if request.user.is_authenticated %}
                         <li>
                             <div class="userView">
                                 <div class="background">
@@ -65,24 +66,31 @@
                                     <img class="responsive-img" src="{% static 'img/rsz_1rsz_suit-couple-blue-shoes.jpg' %}" />
                                 </div>
                                 <a href="{% url 'profil' %}">
-                                    <img class="circle minislikamenutele" src="{% static 'img/2015-trending-mens-haircuts-men39s-hairstyles-trends-for-2014-2015-givenchy-saint-laurent-Picture-HD-Wallpapers-Saamit.jpg' %}"
+                                    <img class="circle minislikamenutele" src="{{ request.user.profilnaslika.slika.url }}"
                                     /></a>
-                                <a href="#" class="right" title="Odjava"><span class="white-text"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></span></a>
-                                <a href="{% url 'profil' %}"><span class="white-text name">Amadej Skornšek</span></a>
-                                <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+                                <a href="#" class="right" title="Odjava" id="odjavaButton"><span class="white-text"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></span></a>
+                                <a href="{% url 'profil' %}"><span class="white-text name">{{user.first_name}} {{user.last_name}}</span></a>
+                                <a href="{% url 'profil' %}"><span class="white-text email">{{user.email}}</span></a>
 
                             </div>
                         </li>
+                        {% endif %}
                         <li><a class='dropdown-button' href='#' data-beloworigin="true" data-activates='dropdown2'>Maturantski ples<i class="material-icons right ">arrow_drop_down</i></a></li>
                         <li><a href="#">Dogodki</a></li>
                         <li><a href="#">Trgovina</a></li>
                         <li><a href="#">Izlet</a></li>
 
-
+                        {% if user.is_authenticated %}
+                        <li>
+                            <div class="divider" style="width: 100%"></div>
+                        </li>
+                        <li><a href="#" id="odjavaButton">Odjava</a></li>
+                        {% else %}
                         <li>
                             <div class="divider" style="width: 100%"></div>
                         </li>
                         <li><a href="#modal1" class="waves-effect waves-light modal-trigger">Prijava</a></li>
+                        {% endif %}
 
                     </ul>
 
@@ -165,13 +173,14 @@
 
                     <div class="row">
                         <div class="col s12 ">
-                            <a href="#"id="facebook" class="waves-effect waves-light btn" style="background: #3B5998">Facebook prijava  <i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            {% load socialaccount %}
+                            <a href="{% provider_login_url "facebook" method="oauth2" %}"id="facebook" class="waves-effect waves-light btn" style="background: #3B5998">Facebook prijava  <i class="fa fa-facebook" aria-hidden="true"></i></a>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col s12 ">
-                            <a id="google" class="waves-effect waves-light btn" style="background: #DD4B39">Google+ prijava <i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                            <a href="{% provider_login_url "google" %}" id="google" class="waves-effect waves-light btn" style="background: #DD4B39">Google+ prijava <i class="fa fa-google-plus" aria-hidden="true"></i></a>
                         </div>
                     </div>
 

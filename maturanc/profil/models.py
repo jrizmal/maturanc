@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from annoying.fields import AutoOneToOneField
+import os
 
 
 #models here:
@@ -33,6 +34,15 @@ class SocialnaOmrezja(models.Model):
     twitter=models.CharField(max_length=100, blank=True)
     soundcloud=models.CharField(max_length=100, blank=True)
 
+    def __str__(self):
+        return '%s' % (self.user)
+    def __unicode__(self):
+        return '%s' % (self.user)
+
+class ProfilnaSlika(models.Model):
+    user = AutoOneToOneField(User)
+    slika = models.ImageField(upload_to='profilne_slike', default='default-avatar.jpg')
+    slika_nalozena_cas = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return '%s' % (self.user)
     def __unicode__(self):

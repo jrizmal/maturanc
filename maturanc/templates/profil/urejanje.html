@@ -67,23 +67,33 @@
                         </div>
                         </span>
                         <div class="divider" style="width: 100%"></div>
+                        <p><h1>Test</h1></p>
+
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">Profilna slika
+                        </span>
+                        <div class="divider" style="width: 100%"></div>
 
 
                         <form class="col s12">
                             <div class="row">
-                                <div class="input-field col s6">
-
-                                    <input id="icon_prefix" type="text" class="validate">
-                                    <label for="icon_prefix">First Name</label>
-                                </div>
-                                <div class="input-field col s6">
-
-                                    <input id="icon_telephone" type="tel" class="validate">
-                                    <label for="icon_telephone" for="icon_telephone" data-error="Vpišite telefon" data-success="right">Telephone</label>
-                                </div>
+                                
+                                
                             </div>
                         </form>
-
+                        {% load static %}
+                                <form method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    {{ form.as_p }}
+                                    <br/>
+                                    <button type="submit" class="waves-effect waves-light btn">Upload</button>
+                                </form>
+                                <img id="okrogleslike" class="circle responsive-img" src="{{ request.user.profilnaslika.slika.url }}" />
+                                
+                                
                     </div>
                 </div>
             </div>

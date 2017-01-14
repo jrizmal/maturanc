@@ -7,12 +7,12 @@
             <!-- TO JE horizontalno poravnano skos na sredino-->
             <div class="valign-wrapper hide-on-med-and-down">
                  <div class="col s12 m12 l4 left ">
-                <img id="okrogleslike" class="circle responsive-img" src="slike/2015-trending-mens-haircuts-men39s-hairstyles-trends-for-2014-2015-givenchy-saint-laurent-Picture-HD-Wallpapers-Saamit.jpg" />
+                <img id="okrogleslike" class="circle responsive-img" src="{{ request.user.profilnaslika.slika.url }}" />
             </div>
             <div class="col s12 m12 l8 left center-on-small-only">
                 <div class="row">
                     <div class="col s11">
-                        <h3>Ime priimek</h3>
+                        <h3>{{user.first_name}} {{user.last_name}}</h3>
                     </div>
 
                     <div class="col s1"><a href="{% url 'urejanje_profila' %}"><i class="fa fa-cog fa-2x  right editbtn3" aria-hidden="true"></i></a></div>
@@ -109,6 +109,7 @@
 
                                 </div>
                             </li>
+                            {% if profil.bio != "" %}
                             <li>
                                 <div class="collapsible-header "><i class="fa fa-user" aria-hidden="true"></i>Bio</div>
                                 <div class="collapsible-body">
@@ -117,7 +118,7 @@
                                     </p>
                                 </div>
                             </li>
-
+                            {% endif %}
                             <li>
                                 <div class="collapsible-header"><i class="fa fa-link" aria-hidden="true"></i>Socialna omrežja</div>
                                 <div class="collapsible-body">
@@ -129,7 +130,7 @@
                                         <div class="section">
                                             {% if social.facebook != "" %}
                                             <div class="col s2 center">
-                                                <a href="{{social.facebook}}"><i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i></a>
+                                                <a href="http://www.facebook.com/{{social.facebook}}"><i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i></a>
                                             </div>
                                             {% endif %}
                                             {% if social.snapchat != "" %}
@@ -139,7 +140,7 @@
                                             {% endif %}
                                             {% if social.instagram != "" %}
                                             <div class="col s2 center">
-                                                <a href="{{social.instagram}}"><i class="fa fa-instagram fa-3x" aria-hidden="true"></i></a>
+                                                <a href="https://www.instagram.com/{{social.instagram}}/"><i class="fa fa-instagram fa-3x" aria-hidden="true"></i></a>
                                             </div>
                                             {% endif %}
                                             {% if social.google != "" %}
@@ -214,15 +215,15 @@
             <!-- KO je ekran na medium in se spremeni design-->
             <div class=" hide-on-large-only">
                 <div class="col s12 m12 l4 left center">
-                <img id="okrogleslike" class="circle responsive-img" src="slike/2015-trending-mens-haircuts-men39s-hairstyles-trends-for-2014-2015-givenchy-saint-laurent-Picture-HD-Wallpapers-Saamit.jpg" />
+                <img id="okrogleslike" class="circle responsive-img" src="{{ request.user.profilnaslika.slika.url }}" />
             </div>
             <div class="col s12 m12 l8 left center-on-small-only">
                 <div class="row">
                     <div class="col s11">
-                        <h3>Ime priimek</h3>
+                        <h3>{{user.first_name}} {{user.last_name}}</h3>
                     </div>
 
-                    <div class="col s1"><a href="profiledit.aspx"><i class="fa fa-cog fa-2x  right editbtn3" aria-hidden="true"></i></a></div>
+                    <div class="col s1"><a href="{% url 'urejanje_profila' %}"><i class="fa fa-cog fa-2x  right editbtn3" aria-hidden="true"></i></a></div>
                 </div>
                 <!--<p>
                     It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
@@ -243,7 +244,7 @@
                                     
                                     <div class="row" style="margin-bottom:0px; padding:0 5px">
                                         <div class="col s12">
-                                            <div class="section">
+                                            <!--<div class="section">
                                                 <div class="row">
                                                     <div class="col s3 right-align">
                                                         Šola:
@@ -290,20 +291,97 @@
                                                     </div>
                                                 </div>
 
+                                            </div>-->
+
+                                            <div class="section">
+                                                {% if profil.sola != "" %}
+                                                <div class="row">
+                                                    <div class="col s3 right-align">
+                                                        Šola:
+                                                    </div>
+
+                                                    <div class="col s9 right truncate" >
+                                                        {{ profil.sola }}
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% if profil.regija != "" %}
+                                                <div class="row">
+                                                    <div class="col s3 right-align">
+                                                        Regija:
+                                                    </div>
+
+                                                    <div class="col s9 right truncate" >
+                                                        {{ profil.regija }}
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% if profil.datum_plesa != null %}
+                                                <div class="row">
+                                                    <div class="col s3 right-align">
+                                                        Ples:
+                                                    </div>
+
+                                                    <div class="col s9 right">
+                                                        {{profil.datum_plesa}}
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% if profil.starost != null %}
+                                                <div class="row">
+                                                    <div class="col s3 right-align">
+                                                        Starost:
+                                                    </div>
+
+                                                    <div class="col s9 right">
+                                                        {{profil.starost}}
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% if profil.spol != null %}
+                                                <div class="row">
+                                                    <div class="col s3 right-align">
+                                                        Spol:
+                                                    </div>
+
+                                                    <div class="col s9 right">
+                                                        {% if profil.spol == True %}
+                                                        Moški
+                                                        {% else %}
+                                                        Ženski
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% if profil.visina != null %}
+                                                <div class="row" style="margin-bottom:0px;">
+                                                    <div class="col s3 right-align">
+                                                        Višina:
+                                                    </div>
+
+                                                    <div class="col s9 right">
+                                                        {{ profil.visina }}
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                
+
                                             </div>
                                         </div>
                                     </div>
 
                                 </div>
                             </li>
+                            {% if profil.bio != "" %}
                             <li>
                                 <div class="collapsible-header "><i class="fa fa-user" aria-hidden="true"></i>Bio</div>
                                 <div class="collapsible-body">
                                     <p>
-                                        It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                                        {{profil.bio}}
                                     </p>
                                 </div>
                             </li>
+                            {% endif %}
 
                             <li>
                                 <div class="collapsible-header"><i class="fa fa-link" aria-hidden="true"></i>Socialna omrežja</div>
@@ -314,26 +392,38 @@
                         </div>
                         <div class="col s1"><a href="#"><i class="fa fa-pencil fa-2x  right editbtn4" aria-hidden="true"></i></a></div>-->
                                         <div class="section">
+                                            {% if social.facebook != "" %}
                                             <div class="col s2 center">
-                                                <a href="#!"><i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i></a>
+                                                <a href="http://www.facebook.com/{{social.facebook}}"><i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i></a>
                                             </div>
+                                            {% endif %}
+                                            {% if social.snapchat != "" %}
                                             <div class="col s2 center">
-                                                <a href="#!"><i class="fa fa-snapchat-square fa-3x" aria-hidden="true"></i></a>
+                                                <a href="{{social.snapchat}}"><i class="fa fa-snapchat-square fa-3x" aria-hidden="true"></i></a>
                                             </div>
+                                            {% endif %}
+                                            {% if social.instagram != "" %}
                                             <div class="col s2 center">
-                                                <a href="#!"><i class="fa fa-instagram fa-3x" aria-hidden="true"></i></a>
+                                                <a href="https://www.instagram.com/{{social.instagram}}/"><i class="fa fa-instagram fa-3x" aria-hidden="true"></i></a>
                                             </div>
+                                            {% endif %}
+                                            {% if social.google != "" %}
                                             <div class="col s2 center">
-                                                <a href="#!"><i class="fa fa-google-plus fa-3x" aria-hidden="true"></i></a>
+                                                <a href="{{social.google}}"><i class="fa fa-google-plus fa-3x" aria-hidden="true"></i></a>
                                             </div>
-
+                                            {% endif %}
+                                            {% if social.twitter != "" %}
                                             <div class="col s2 center">
-                                                <a href="#!"><i class="fa fa-twitter fa-3x" aria-hidden="true"></i></a>
+                                                <a href="{{social.twitter}}"><i class="fa fa-twitter fa-3x" aria-hidden="true"></i></a>
                                             </div>
+                                            {% endif %}
+                                            {% if social.soundcloud != "" %}
                                             <div class="col s2 center">
-                                                <a href="#!"><i class="fa fa-soundcloud fa-3x" aria-hidden="true"></i></a>
+                                                <a href="{{social.soundcloud}}"><i class="fa fa-soundcloud fa-3x" aria-hidden="true"></i></a>
                                             </div>
+                                            {% endif %}
                                         </div>
+                                        
 
                                     </div>
                                 </div>

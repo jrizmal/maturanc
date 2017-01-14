@@ -19,13 +19,20 @@ import domov.views as domov_views
 import profil.views as profil_views
 import iskanje.views as iskanje_views
 from allauth.account.views import LoginView
+from django.conf import settings
+from django.conf.urls.static import static
+import profil
 
 urlpatterns = [
-    url(r'^profil/urejanje/', profil_views.urediProfil,name='urejanje_profila'),
+    url(r'^accounts/', include('allauth.urls')),
+	url(r'^profil/urejanje/$', profil_views.urediProfil,name='urejanje_profila'),
     url(r'^admin/', admin.site.urls),
-    url(r'^profil/', profil_views.profil,name='profil'),
-    url(r'^iskanje/', iskanje_views.iskanje,name='iskanje'),
+    url(r'^profil/$', profil_views.profil,name='profil'),
+    url(r'^iskanje/$', iskanje_views.iskanje,name='iskanje'),
     url(r'^api/', include('api.urls'),name='api'),
-    url(r'^accounts/login/', LoginView,name='socialLogin'),
-    url(r'', domov_views.domov,name='domov'),
+    url(r'^accounts/login/$', LoginView,name='socialLogin'),
+    
+    url(r'^$', domov_views.domov,name='domov'),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
