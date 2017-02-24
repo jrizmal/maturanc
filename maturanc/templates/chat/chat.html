@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block head %}
+{% load static %}
+<link href="{% static 'css/simple-scrollbar.css' %}" rel="stylesheet" />
+<script src="{% static 'js/jquery.mCustomScrollbar.js' %}"></script>
+{% endblock %}
+{% block title %}
+<title>Maturanc.com - Chat</title>
+{% endblock %}
+{% block content %}
+
+{% load thumbnail %}                        
+
+<input type="hidden" id="url_slika" value=""/>
+
+{% csrf_token %}
+    <div class="container">
+        <div class="row" style="margin-bottom: 0px">
+            <div class="col s12">
+
+                <div class="card customscroll" style="overflow-x: scroll ">
+                    <div class="card-content chatpogovori">
+                        {% for k in kontakti %}
+                        
+                      
+                        <a href="#">
+                            <div class="chip hoverable {% if k.nova_sporocila %}red white-text{%endif%}" userid="{{ k.oseba2.id }}" ime="{{k.oseba2.first_name}} {{k.oseba2.last_name}}">
+                                {% thumbnail k.oseba2.profilnaslika.slika "75x75" crop="center" as im %}
+                                    <img style="object-fit: cover" src="{{im.url}}" alt="Contact Person" class="chip-slika"/>
+                                {% endthumbnail %}
+                                
+                               {{k.oseba2.first_name}} {{k.oseba2.last_name}}
+                            </div>
+                        </a>
+                        {% endfor %}
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <div class="card">
+                    
+
+                    <h5 id="ime_sogovornika" style="margin: 0px; padding: 10px"></h5>
+                    
+                    <ul class="collection chat" id="chat_list" >
+                    
+                    </ul>
+                    
+                    <div class="card-content content-send">
+                        <div class="row row-send">
+
+                            <div class="input-field col s12 sporocilo chat-send">
+
+                                <textarea placeholder="Napišite sporočilo..." id="besedilo_text" class="materialize-textarea chat-send"></textarea>
+
+                                <a class="waves-effect waves-light btn-flat poslji" id="poslji_button"><i class="fa fa-paper-plane" aria-hidden="true"></i></a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    
+    <script>
+        var mojID = {{ request.user.id }};
+        var sogovornikID;
+        
+        $( document ).ready(function() {
+            /*$(".customscroll").mCustomScrollbar({
+                axis: "x",
+                theme: "minimal-dark",
+                mouseWheelPixels: 300,
+                scrollInertia: 900,
+            });*/
+
+            
+            var sum = 0;
+            $('.chip').each(function () {
+                sum += 35 + $(this).width();
+            });
+            $(".chatpogovori").width(sum);
+        });
+        
+    
+    </script>
+    <script src="{% static 'js/chat.js' %}"></script>
+    
+    <script src="{% static 'js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+{% endblock %}

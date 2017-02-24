@@ -1,7 +1,6 @@
 ﻿/*----------------------------------------------------------------------------------------------------text*/
 .input-field input[type=text]:focus + label {
-    color: #BA0B0B !important;
-   
+    color: #BA0B0B;
 }
 /* label underline focus color */
 .input-field input[type=text]:focus {
@@ -10,22 +9,20 @@
 }
 /* valid color */
 .input-field input[type=text].valid {
-    border-bottom: 1px solid #BA0B0B;
-    box-shadow: 0 1px 0 0 #BA0B0B;
+    border-bottom: 1px solid #9e9e9e;
+    box-shadow: 0 0px 0 0 #9e9e9e;
 }
 /* invalid color */
 .input-field input[type=text].invalid {
-    border-bottom: 1px solid #BA0B0B;
-    box-shadow: 0 1px 0 0 #BA0B0B;
 }
 /* icon prefix focus color */
 .input-field .prefix.active {
     color: #000;
 }
 
-.form-control{
-    border-bottom:none !important; 
-    box-shadow:none !important;
+.form-control {
+    border-bottom: none !important;
+    box-shadow: none !important;
 }
 
 /*----------------------------------------------------------------------------------------------------- email*/
@@ -35,7 +32,6 @@
 /* label focus color */
 .input-field input[type=email]:focus + label {
     color: #BA0B0B;
-    
 }
 /* label underline focus color */
 .input-field input[type=email]:focus {
@@ -44,13 +40,13 @@
 }
 /* valid color */
 .input-field input[type=email].valid {
-    border-bottom: 1px solid #000;
-    box-shadow: 0 1px 0 0 #000;
+    border-bottom: 1px solid #9e9e9e;
+    box-shadow: 0 0px 0 0 #9e9e9e;
 }
 /* invalid color */
 .input-field input[type=email].invalid {
-    border-bottom: 1px solid #000;
-    box-shadow: 0 1px 0 0 #000;
+    border-bottom: 1px solid #BA0B0B;
+    box-shadow: 0 1px 0 0 #BA0B0B;
 }
 /* icon prefix focus color */
 .input-field .prefix.active {
@@ -64,7 +60,6 @@
 /* label focus color */
 .input-field input[type=password]:focus + label {
     color: #BA0B0B;
-    
 }
 /* label underline focus color */
 .input-field input[type=password]:focus {
@@ -73,13 +68,11 @@
 }
 /* valid color */
 .input-field input[type=password].valid {
-    border-bottom: 1px solid #000;
-    box-shadow: 0 1px 0 0 #000;
+    border-bottom: 1px solid #9e9e9e;
+    box-shadow: 0 0px 0 0 #9e9e9e;
 }
 /* invalid color */
 .input-field input[type=password].invalid {
-    border-bottom: 1px solid #000;
-    box-shadow: 0 1px 0 0 #000;
 }
 /* icon prefix focus color */
 .input-field .prefix.active {
@@ -88,20 +81,46 @@
 
 /*-------------------------------------------------------------------------------------------Stikalo*/
 
-.switch label input[type=checkbox]:checked+.lever {
-  background-color: #BA0B0B;
+.switch label input[type=checkbox]:checked + .lever {
+    background-color: #BA0B0B;
 }
 
-.switch label input[type=checkbox]:checked+.lever:after {
-  background-color: #F1F1F1;
-}
+    .switch label input[type=checkbox]:checked + .lever:after {
+        background-color: #F1F1F1;
+    }
 
-.switch label .lever{
+.switch label .lever {
     background-color: #BA0B0B;
 }
 
 /*poravnavaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa*/
-.modal .input-field.col label{
-    left:0rem;
+.modal .input-field.col label {
+    left: 0rem;
+}
+
+.inputnaslov label {
+    color: #000;
+    font-size: 1rem;
+}
+
+textarea:focus:not([readonly]) {
+    border-bottom: 1px solid #BA0B0B !important;
+    box-shadow: 0 1px 0 0 #BA0B0B !important;
+}
+
+    textarea:focus:not([readonly]) + label {
+        color: #BA0B0B !important;
+    }
+
+.input-field div.error {
+    position: relative;
+    top: -0.5rem;
+    left: 0rem;
+    font-size: 0.8rem;
+    color: #BA0B0B;
+    -webkit-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    -o-transform: translateY(0%);
+    transform: translateY(0%);
 }
 

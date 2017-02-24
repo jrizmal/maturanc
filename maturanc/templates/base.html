@@ -3,24 +3,41 @@
 <head runat="server">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
         crossorigin="anonymous">
-    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
-    
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="{% static 'js/jquery.autocomplete.js' %}"></script>
 
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    
+    
+
+    <script src="{% static 'js/jquery.autocomplete.js' %}"></script>
+    <script src="{% static 'js/materialize.js' %}"></script>
+    
+    {% block title %}
+        
+    {% endblock %}
+
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}"/>
+    
     <link href="{% static 'css/StyleSheet.css' %}" rel="stylesheet" />
     <link href="{% static 'css/media.css' %}" rel="stylesheet" />
     <link href="{% static 'css/listInput.css' %}" rel="stylesheet" />
     <link href="{% static 'css/noUislider.css' %}" rel="stylesheet" />
     <link href="{% static 'css/autocompletejq.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/datepicker.css' %}" rel="stylesheet" />
+    
+    
     
     {% block head %}
     {% endblock %}
     <meta name="theme-color" content="#455A64">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="google-site-verification" content="XJ4FNWCDh14ZHreu8Wyv-sB0cbD_MWg-n-hEbrmSilA" />
+    <meta name="google-site-verification" content="G2vDNd58O8ThUexGgGqLc2hPTAVnw8XvoAGFQVxjhdU" />
+    <meta name="description" content="Spletni portal maturanc.com je namenjen maturantom. Omogoča iskanje soplesalcev za maturantski ples. Prodajo rabljenih oblek, učbenikov... Spletna stran omogoča obveščanje maturantov s strani srednje in plesne šole.">
 </head>
 
 <body>
@@ -37,26 +54,32 @@
 
                     <ul class="right hide-on-med-and-down">
 
-                        <li>
-                            <a id="toggle-search" href="#!">
-                                <i class="large material-icons">search</i>
-                            </a>
-                        </li>
-                        <li><a class='dropdown-button' href='#' data-beloworigin="true" data-activates='dropdown1'>Maturantski ples<i class="material-icons right">arrow_drop_down</i></a></li>
-                        <li><a href="#">Dogodki</a></li>
+                        
+                        <li><a class='dropdown-button' href='#' data-beloworigin="true" data-activates='dropdown1' data-hover="true">Maturantski ples<i class="material-icons right">arrow_drop_down</i></a></li>
+                        
                         <li><a href="#">Trgovina</a></li>
                         <li><a href="#">Izlet</a></li>
                         {% if request.user.is_authenticated %}
+                        <li><a href="{% url 'chat' %}">Chat <span class="new badge red" data-badge-caption="novih">{{nova_sporocila}}</span></a></li>
+                        
+                        
                         <li>
-                            <a href="{% url 'profil' %}" title="Račun">
-                                <img class="circle minislikaracun right" src="{{ request.user.profilnaslika.slika.url }}"
-                                /> {{user.first_name}} {{user.last_name}}
+                            <a href="{% url 'profil' %}" class="dropdown-button" data-beloworigin="true" data-hover="true" data-activates="dropdown3" title="Račun"><i class="material-icons right">arrow_drop_down</i>
+                                {% load thumbnail %}
+                        
+                                {% thumbnail request.user.profilnaslika.slika "75x75" crop="center" as im %}
+                                    <img class="circle minislikaracun right" src="{{ im.url }}"/> 
+                                {% endthumbnail %}
+
+
+                                 {{user.first_name}}
                             </a>
-                            <a href="{% url 'profil' %}" title="Račun"></a>
                         </li>
-                        
-                        
-                        <li><a href="#" title="Odjava" id="odjavaButton"><i style="font-size: 13pt;" class="fa fa-sign-out" aria-hidden="true"></i></a></li>
+                        <ul id='dropdown3' class='dropdown-content'>
+                                <li><a href="{% url 'urejanje_profila' %}">Nastavitve</a></li>
+                                <li><a href="#" title="Odjava" id="odjavaButton">Odjava <i style="font-size: 13pt;" class="fa fa-sign-out right" aria-hidden="true"></i></a></li>
+                        </ul>
+                    
                         {% else %}
                         
                         <li><a href="#modal1" class="waves-effect waves-light btn modal-trigger">Prijava</a></li>
@@ -72,9 +95,10 @@
                                     <img class="responsive-img" src="{% static 'img/rsz_1rsz_suit-couple-blue-shoes.jpg' %}" />
                                 </div>
                                 <a href="{% url 'profil' %}">
-                                    <img class="circle minislikamenutele" src="{{ request.user.profilnaslika.slika.url }}"
-                                    /></a>
-                                <a href="#" class="right" title="Odjava" id="odjavaButton"><span class="white-text"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></span></a>
+                                    {% thumbnail request.user.profilnaslika.slika "75x75" crop="center" as im %}
+                                        <img class="circle minislikamenutele" src="{{ im.url }}"/> 
+                                    {% endthumbnail %}    
+                                </a>
                                 <a href="{% url 'profil' %}"><span class="white-text name">{{user.first_name}} {{user.last_name}}</span></a>
                                 <a href="{% url 'profil' %}"><span class="white-text email">{{user.email}}</span></a>
 
@@ -82,15 +106,22 @@
                         </li>
                         {% endif %}
                         <li><a class='dropdown-button' href='#' data-beloworigin="true" data-activates='dropdown2'>Maturantski ples<i class="material-icons right ">arrow_drop_down</i></a></li>
-                        <li><a href="#">Dogodki</a></li>
+                        
+                        
                         <li><a href="#">Trgovina</a></li>
                         <li><a href="#">Izlet</a></li>
-
                         {% if user.is_authenticated %}
+                        <li><a href="{% url 'chat' %}">Chat</a></li>
+                        
+                        <li>
+                            <div class="divider" style="width: 100%"></div>
+                        </li>
+                        <li><a href="{% url 'urejanje_profila' %}">Nastavitve profila</a></li>
                         <li>
                             <div class="divider" style="width: 100%"></div>
                         </li>
                         <li><a href="#" id="odjavaButton">Odjava</a></li>
+
                         {% else %}
                         <li>
                             <div class="divider" style="width: 100%"></div>
@@ -115,28 +146,29 @@
 
     </div>
 
-    <div id="search" class="row  ">
 
-        <div class="container">
-            <form method="get" action="https://www.google.com/search">
-                <input class="form-control" type="text" placeholder="Search ..." name="q"></input>
-                <input type="hidden" value="kesnroks.com" name="as_sitesearch"></input>
-            </form>
-        </div>
-    </div>
 
 
     <!-- Dropdown Structure -->
     <ul id='dropdown1' class='dropdown-content'>
+        {% if user.is_authenticated %}
         <li><a href="{% url 'iskanje' %}">Iskanje soplesalcev</a></li>
+        {% else %}
+        <li><a href="#modal1" class="modal-trigger">Iskanje soplesalcev</a></li>
+        {% endif %}
         <li><a href="#">Plesne šole</a></li>
     </ul>
     <ul id='dropdown2' class='dropdown-content'>
+        {% if user.is_authenticated %}
         <li><a href="{% url 'iskanje' %}">Iskanje soplesalcev</a></li>
+        {% else %}
+        <li><a href="#modal1" class="modal-trigger">Iskanje soplesalcev</a></li>
+        {% endif %}
         <li><a href="#">Plesne šole</a></li>
     </ul>
 
-
+    {% if user.is_authenticated %}
+    {% else %}
     <!--popup Login-->
     <div id="modal1" class="modal ">
         <div class="modal-content ">
@@ -151,17 +183,18 @@
 
             </div>
             <div class="row" id="prijava">
+                <form id="prijava-form">
                 <div class="col s12 m6">
                     <form class="col s12">
                         <div class="row">
                             <div class="input-field col s12 ">
-                                <input id="email" type="email" class="validate" />
-                                <label for="email" data-error="Email ne ustreza">Email</label>
+                                <input id="email" type="email" name="email" />
+                                <label for="email">Email</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="password" type="password" class="validate" />
+                                <input id="password" type="password" name="geslo" />
                                 <label for="password">Geslo</label>
                             </div>
                         </div>
@@ -172,7 +205,7 @@
                     </div>
 
                 </div>
-
+                </form>
 
                 <div class="col s12 m6 center" id="socialLogin">
 
@@ -206,6 +239,7 @@
 
 
     <!--RegPopup -->
+    
     <div id="modal2" class="modal">
         <div class="modal-content ">
             <div class=" row">
@@ -220,32 +254,38 @@
             </div>
             <div class="row" id="reg">
 
-                <form class="col s12">
+                <form id="form-registracija" class="col s12" action="/registracija/" method="POST" autocomplete="off">
+                {% csrf_token %}
                     <div class="row">
                         <div class="input-field col s12 m6">
-                            <input id="imeReg" type="text" class="validate" />
+                            <input id="imeReg" type="text" class="validate" name="ime" />
+                            <div class="error"></div>
                             <label for="imeReg">Ime</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input id="priimekReg" type="text" class="validate" />
+                            <input id="priimekReg" type="text" class="validate" name="priimek" />
+                            <div class="error"></div>
                             <label for="priimekReg">Priimek</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12 ">
-                            <input id="emailReg" type="email" class="validate" />
-                            <label for="emailReg" data-error="Email ne ustreza">Email</label>
+                            <input id="emailReg" type="email" class="validate" name="email" />
+                            <div class="error"></div>
+                            <label for="emailReg" data-error="Email ne ustreza">E-mail naslov</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12 ">
-                            <input id="passwordReg" type="password" class="validate" />
-                            <label for="passwordReg">Password</label>
+                            
+                            <input id="passwordReg" type="password" class="validate" name="geslo" />
+                            <div class="error"></div>
+                            <label for="passwordReg">Geslo</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12 ">
-                            <select>
+                            <select id="spolReg" name="spol">
                                 <option value="" disabled selected>Izberi spol</option>
                                 <option value="1">Moški</option>
                                 <option value="2">Ženski</option>
@@ -254,17 +294,18 @@
                     </div>
                     <div class="row">
                         <div class="col s12 ">
-                            <a class="waves-effect waves-light btn" style="display: block; width: 100%;">Registracija</a>
+                            <button type="submit" id="submit-button" class="waves-effect waves-light btn" style="display: block; width: 100%;">Registracija</button>
                         </div>
                     </div>
                 </form>
+                <script src="{% static 'js/registracija.js' %}"></script>
 
             </div>
 
 
         </div>
     </div>
-
+    {% endif %}
 
 
 
@@ -272,7 +313,11 @@
 
     <!--Vsebina podstrani MasterPage.master-->
 
-    {% block content %} {% endblock %}
+    {% block content %} 
+    
+    
+    
+    {% endblock %}
 
     <!--Noga / footer-->
     <footer class="page-footer blue-grey darken-2">
@@ -295,7 +340,7 @@
         </div>
         <div class="footer-copyright blue-grey darken-3">
             <div class="container">
-                © 2016 Copyright Maturanc.com
+                © {% now 'Y' %} Copyright Maturanc.com
                 <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
             </div>
         </div>
@@ -304,22 +349,30 @@
     <!--Skripte-->
 
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+    
+    <!--
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
 
-    <!-- Angular Material Library -->
-    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script> -->
 
 
     <script src="{% static 'js/custom.js' %}"></script>
-    <script src="{% static 'js/noUiSlider.js' %}"></script>
+    
     <script src="{% static 'js/prijava.js' %}"></script>
-    <script src="{% static 'js/masonry.pkgd.js' %}"></script>
-    <script src="{% static 'js/dropify.js' %}"></script>
+    
+    
     <script src="{% static 'js/jquery.autocomplete.js' %}"></script>
+    <script src="{% static 'js/noUiSlider.js' %}"></script>
+    
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.0/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.0/additional-methods.min.js"></script>
+
+    <script src="{% static 'js/validate.js' %}"></script>
+    
 
     <script>
         $(document).ready(function () {
@@ -335,56 +388,6 @@
             //        $('#swsocialnaomrezja').click(function () {
             //          $('#socialnaomrezja').toggleClass('hide');
             //    });
-
-            $('.searchresult').masonry({
-                itemSelector: '.gridKartice',
-
-
-            });
-
-            $('.dropify').dropify({
-                messages: {
-                    'default': 'Povleci in spusti sliko sem ali klikni tukaj',
-                    'replace': 'Povleci in spusti sliko sem ali klikni tukaj če želiš zamenjati sliko',
-                    'remove': 'Odstrani',
-                    'error': 'Nekaj se je zalomilo.'
-                }
-            })
-           
-
-
-
-
-
-            var slider = document.getElementById('html5');
-
-            var skipValues = [
-            slider1Value = document.getElementById('slider1-span'),
-	        slider2Value = document.getElementById('slider2-span')
-            ];
-            function crossUpdate(value, slider) {
-
-                slider.noUiSlider.set(value);
-            }
-
-
-            noUiSlider.create(slider, {
-                start: [150, 190],
-                connect: true,
-                step: 5,
-                range: {
-                    'min': 100,
-                    'max': 260,
-                },
-                format: wNumb({
-                    decimals: 0
-                })
-            });
-
-            slider.noUiSlider.on('update', function (values, handle) {
-                skipValues[handle].innerHTML = values[handle];
-            });
-
         });
 
         // Toggle search
@@ -398,6 +401,16 @@
 
             return false;
         });
+    </script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-90493849-1', 'auto');
+        ga('send', 'pageview');
+
     </script>
 
 

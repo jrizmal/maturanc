@@ -4,11 +4,18 @@
     {% load static %}
 
     <link href="{% static 'css/dropify.css' %}" rel="stylesheet" />
+    <script src="{% static 'js/dropify.js' %}"></script>
+
+    
+    
+
 
 {% endblock %}
+{% block title %}
+        <title>Maturanc.com - Moj profil</title>
+    {% endblock %}
 
 {% block content %}
-        <div>
             
     <div class="container">
         <div class="row">
@@ -27,8 +34,18 @@
                         <div class="row">
                             <div class="col s12">
                                 
-                                <input type="file" class="dropify" id="id_slika" name="slika" data-max-file-size="3M" data-allowed-file-extensions="jpg png jpeg" />
+                                <input type="file" class="dropify" id="id_slika" name="slika" data-max-file-size="5M" data-allowed-file-extensions="jpg png jpeg gif" />
                             </div>
+                            <script>
+                                $('.dropify').dropify({
+                                    messages: {
+                                        'default': 'Povleci in spusti sliko sem ali klikni tukaj',
+                                        'replace': 'Povleci in spusti sliko sem ali klikni tukaj če želiš zamenjati sliko',
+                                        'remove': 'Odstrani',
+                                        'error': 'Nekaj se je zalomilo.'
+                                    }
+                                });
+                            </script>
 
                         </div>                         
                        
@@ -49,7 +66,8 @@
                 <div class="card optioncard">
                     <div class="card-content ">
                         <span class="card-title">Iskanje soplesalcev
-                        <!--<div class="switch right" style="display: inline">
+                            <!--
+                        <div class="switch right" style="display: inline">
                             <label>
                                 OFF 
                         <input type="checkbox" id="swiskanjesoplesalcev" />
@@ -61,7 +79,7 @@
                         <!--naslov kartice-->
                         <div class="divider" style="width: 100%"></div>
 
-                        <form method="POST" action="shrani/">{% csrf_token %}
+                        <form id="form_podatki" autocomplete="off">{% csrf_token %}
                         <div id="iskanjesoplesalcevform">
                             <!--Hide div-->
                             <!--Šola-->
@@ -297,8 +315,10 @@
                                 });
                             </script>
                             <div class="row">
+                                
                                 <div class="input-field col s12 m12">
-                                    <select name="spol">
+                                   
+                                    <select name="spol" >
                                         
                                         {% if request.user.profil.spol is True %}
                                             <option value="" disabled>Izberi spol</option>
@@ -316,18 +336,59 @@
                                     </select>
                                 </div>
                             </div>
+                            
                             <div class="row">
-                                <div class="col s12" style="margin-top: 30px">
+                                <div class="col s12">
                                     <div class="row">
-                                        <div class="inputnaslov col s12 m12">
-                                            <label>Izberi višino</label>
-                                            <p class="range-field">
-                                                <input name="visina" type="range" id="test5" min="95" max="260" value="{{request.user.profil.visina}}"/>
-                                            </p>
+                                        <div class="col s12 m12">
+                                            <label >Nastavite vašo višino: <span id="trenutnavisina"></span>cm</label>
+
+                                            <div  class="sliders" id="visina" style="margin-top: 20px; margin-bottom: 20px;"></div>
+                                            <div id="visina_hidden"  class="hidden"></div>
+                                            <input id="hiddenVisina" type="hidden" value="150" name="visina" />
+                                            <script>
+                                                $(function () {
+                                                    var slider = document.getElementById('visina');
+
+                                                    var skipValues = [
+                                                    slider1Value = document.getElementById('trenutnavisina'),
+                                                   
+                                                    ];
+                                                    function crossUpdate(value, slider) {
+                                                        document.getElementById('visina_hidden').innerHTML(value)
+                                                        slider.noUiSlider.set(value);
+                                                    }
+
+                                                    noUiSlider.create(slider, {
+                                                        start:{% if request.user.profil.visina is not None %}
+                                                                {{ request.user.profil.visina }}
+                                                                {% else %}
+                                                                175
+                                                                {% endif %},
+                                                        step: 1,
+                                                        range: {
+                                                            'min': 100,
+                                                            'max': 260
+                                                        },
+                                                        format: wNumb({
+                                                            decimals: 0
+                                                        })
+                                                    });
+                                                    slider.noUiSlider.on('update', function (values, handle) {
+                                                        skipValues[handle].innerHTML = values[handle];
+                                                        $('#hiddenVisina').val(values[handle]);
+                                                    });
+
+
+                                                });
+
+                                            </script>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="row">
                                 <div class="col s12 m12 ">
                                     
@@ -338,9 +399,11 @@
                             </div>
                             <div class="row">
                                 <div class="col s12 m12 ">
-                                    <label>Starost</label>
-                                    <input name="starost" type="number"  id="leto_rojstva" value="{{request.user.profil.starost}}">
+                                    
+                                    <label>Izberi datum rojstva</label>
+                                    <input name="datum_rojstva" type="date" class="datepicker" id="datumrojstva">
                                 </div>
+
                             </div>
 
 
@@ -359,8 +422,11 @@
                 </div>
                 <!--socialna omrežja funkcija-->
                 <div class="card">
+                    <form id="form_omrezja" autocomplete="off">
+                        {% csrf_token %}
                     <div class="card-content">
                         <span class="card-title">Socialna omrežja
+                        <!--
                         <div class="switch right" style="display: inline">
                             <label>
                                 OFF 
@@ -368,7 +434,7 @@
                                 <span class="lever"></span>
                                 ON
                             </label>
-                        </div>
+                        </div>-->
                         </span>
                         <!--naslov kartice-->
                         <div class="divider" style="width: 100%"></div>
@@ -381,7 +447,7 @@
                                     <div class="row">
                                         <div class="input-field col s12">
                                             <i class="fa fa-facebook-official prefix" aria-hidden="true"></i>
-                                            <input id="icon_prefix" type="text" class="validate">
+                                            <input id="icon_prefix" type="text" class="validate" name="facebook" value="{{ request.user.socialnaomrezja.facebook }}">
                                             <label for="icon_prefix">Facebook</label>
                                         </div>
                                     </div>
@@ -393,7 +459,7 @@
                                     <div class="row">
                                         <div class="input-field col s12">
                                             <i class="fa fa-snapchat-square prefix" aria-hidden="true"></i>
-                                            <input id="icon_prefix" type="text" class="validate">
+                                            <input id="icon_prefix" type="text" class="validate" name="snapchat" value="{{ request.user.socialnaomrezja.snapchat }}">
                                             <label for="icon_prefix">Snapchat</label>
                                         </div>
                                     </div>
@@ -405,61 +471,44 @@
                                     <div class="row">
                                         <div class="input-field col s12">
                                             <i class="fa fa-instagram prefix" aria-hidden="true"></i>
-                                            <input id="icon_prefix" type="text" class="validate">
+                                            <input id="icon_prefix" type="text" class="validate" name="instagram" value="{{ request.user.socialnaomrezja.instagram }}">
                                             <label for="icon_prefix">Instagram</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-
-                                <div class="col s12">
-                                    <div class="row">
-                                        <div class="input-field col s12">
-                                            <i class="fa fa-google-plus prefix" aria-hidden="true"></i>
-                                            <input id="icon_prefix" type="text" class="validate">
-                                            <label for="icon_prefix">Google+</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                             <div class="row">
 
                                 <div class="col s12">
                                     <div class="row">
                                         <div class="input-field col s12">
                                             <i class="fa fa-twitter prefix " aria-hidden="true"></i>
-                                            <input id="icon_prefix" type="text" class="validate">
+                                            <input id="icon_prefix" type="text" class="validate" name="twitter" value="{{ request.user.socialnaomrezja.twitter }}">
                                             <label for="icon_prefix">Twitter</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-
-                                <div class="col s12">
-                                    <div class="row">
-                                        <div class="input-field col s12">
-                                            <i class="fa fa-soundcloud prefix" aria-hidden="true"></i>
-                                            <input id="icon_prefix" type="text" class="validate">
-                                            <label for="icon_prefix">Soundcloud</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                             
 
 
 
                         </div>
+                        <div class="row">
+                                <div class="col s12">
+                                    <button class="waves-effect waves-light btn right" type="submit">Shrani spremembe</button>
+                                    
+                                </div>
+                            </div>
                         
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-
-        </div>
         <script>
         $(document).ready(function () {
             var picker = $('#datumplesa').pickadate({
@@ -467,17 +516,48 @@
                 formatSubmit: 'yyyy-mm-dd',
                 selectMonths: true,
                 selectYears: 2,
+                monthsFull: ['januar', 'februar', 'marec', 'april', 'maj', 'junij', 'julij', 'avgust', 'september', 'oktober', 'november', 'december'],
+                monthsShort: ['jan', 'feb', 'mar', 'apr', 'maj', 'jun', 'jul', 'avg', 'sep', 'okt', 'nov', 'dec'],
+                weekdaysFull: ['nedelja', 'ponedeljek', 'torek', 'sreda', 'četrtek', 'petek', 'sobota'],
+                weekdaysShort: ['ned', 'pon', 'tor', 'sre', 'čet', 'pet', 'sob'],
+                today: 'danes',
+                clear: 'izbriši',
+                close: 'zapri',
+                firstDay: 1,
+
                 {% if request.user.profil.datum_plesa is not None %}
                 onStart: function(){
                     this.set('select', '{{request.user.profil.datum_plesa|date:"Y-m-d"}}', { format: 'yyyy-mm-dd' });
                 },
                 {% endif %}
             });
+            var picker2 = $('#datumrojstva').pickadate({
+                format: 'dddd, dd/mm/yyyy',
+                formatSubmit: 'yyyy-mm-dd',
+                selectMonths: true,
+                selectYears: 100,
+                dateMax: true,
+                
+                monthsFull: ['januar', 'februar', 'marec', 'april', 'maj', 'junij', 'julij', 'avgust', 'september', 'oktober', 'november', 'december'],
+                monthsShort: ['jan', 'feb', 'mar', 'apr', 'maj', 'jun', 'jul', 'avg', 'sep', 'okt', 'nov', 'dec'],
+                weekdaysFull: ['nedelja', 'ponedeljek', 'torek', 'sreda', 'četrtek', 'petek', 'sobota'],
+                weekdaysShort: ['ned', 'pon', 'tor', 'sre', 'čet', 'pet', 'sob'],
+                today: 'danes',
+                clear: 'izbriši',
+                close: 'zapri',
+                firstDay: 1,
 
+                {% if request.user.profil.starost is not None %}
+                onStart: function(){
+                    this.set('select', '{{request.user.profil.starost|date:"Y-m-d"}}', { format: 'yyyy-mm-dd' });
+                },
+                {% endif %}
+            });
             
 
             //picker.set('select', '{{request.user.profil.datum_plesa|date:"Y-n-j"}}');
         });
         </script>
+        <script src="{% static 'js/urejanje_profila.js' %}"></script>
         
 {% endblock %}

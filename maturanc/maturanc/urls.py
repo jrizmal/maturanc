@@ -18,6 +18,7 @@ from django.contrib import admin
 import domov.views as domov_views
 import profil.views as profil_views
 import iskanje.views as iskanje_views
+import chat.views as chat_views
 from allauth.account.views import LoginView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -27,11 +28,15 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
 	url(r'^profil/urejanje/$', profil_views.urediProfil,name='urejanje_profila'),
     url(r'^profil/urejanje/shrani/$', profil_views.shraniSpremembe,name='shrani_spremembe'),
+    url(r'^profil/urejanje/shrani/omrezja/$', profil_views.shraniOmrezja,name='shrani_spremembe_omrezja'),
     url(r'^admin/', admin.site.urls),
     url(r'^profil/$', profil_views.profil,name='profil'),
     url(r'^iskanje/$', iskanje_views.iskanje,name='iskanje'),
+    url(r'^uporabnik/(?P<id_uporabnika>\d+)/$', profil_views.publicProfil,name='javni_profil'),
+    url(r'^chat/$', chat_views.chat,name='chat'),
     url(r'^api/', include('api.urls'),name='api'),
     url(r'^accounts/login/$', LoginView,name='socialLogin'),
+    url(r'^registracija/$', profil_views.registracija,name='registracija'),
     
     url(r'^$', domov_views.domov,name='domov'),
 ]

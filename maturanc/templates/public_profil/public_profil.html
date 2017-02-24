@@ -1,0 +1,165 @@
+{% extends 'base.html' %} 
+
+{% block title %}
+    <title>Maturanc.com - {{public_user.first_name}} {{public_user.last_name}}</title>
+{% endblock %}
+
+{% block content %}        
+    <div class="container">
+        <div class="row" id="valignvrsta">
+             
+            <div class="col s12 m6 l5">
+                <div class="card ">
+                    <div class="card-image ">
+                        {% load thumbnail %}
+                        {% if public_profilna_slika.slika|is_portrait %}
+                        {% thumbnail public_profilna_slika.slika "600x600" crop="center" format="JPEG" as im %}
+                            <img class="square materialboxed kvadratnaslika" src="{{ im.url }}" >
+                        {% endthumbnail %}
+                        {% else %}
+                        {% thumbnail public_profilna_slika.slika "600" format="JPEG" as im %}
+                            <img class="square materialboxed kvadratnaslika" src="{{ im.url }}" >
+                        {% endthumbnail %}
+                        {% endif %}
+                       
+
+                    </div>
+                </div>
+                {% if public_social.facebook != "" or public_social.snapchat != "" or public_social.instagram != "" or public_social.twitter != "" %}
+                <div class="card">
+                    <div class="card-content">
+                        <div class="row socialmedia">
+                            <div class="section">
+                                {% if public_social.facebook != "" %}
+                                <div class="col center" style="width:25%">
+                                    <a href="#!" class="tooltipped" data-tooltip="{{ public_social.facebook }}" data-delay="50"><i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i></a>
+                                </div>
+                                {% endif %}
+                                {% if public_social.snapchat != "" %}
+                                <div class="col  center" style="width:25%">
+                                    <a href="#!" class="tooltipped" data-tooltip="{{ public_social.snapchat }}" data-delay="50"><i class="fa fa-snapchat-square fa-3x" aria-hidden="true"></i></a>
+                                </div>
+                                {% endif %}
+                                {% if public_social.instagram != "" %}
+                                <div class="col  center" style="width:25%">
+                                    <a href="#!" class="tooltipped" data-tooltip="{{ public_social.instagram }}" data-delay="50"><i class="fa fa-instagram fa-3x" aria-hidden="true"></i></a>
+                                </div>
+                                {% endif %}
+                                {% if public_social.twitter != "" %}
+                                <div class="col  center" style="width:25%">
+                                    <a href="#!" class="tooltipped" data-tooltip="{{ public_social.twitter }}" data-delay="50"><i class="fa fa-twitter fa-3x" aria-hidden="true"></i></a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+            </div>
+            <div class="col s12 m6 l7">
+
+
+                <ul class="collection with-header z-depth-1">
+                    <li class="collection-header">
+                        <h4>{{ public_user.first_name }} {{ public_user.last_name }}</h4>
+                            {% if public_profil.sola is not None and public_profil.sola != "" %}
+                            <div >{{ public_profil.sola }}</div>
+                            {% endif %}
+                        
+                    </li>
+                    {% if public_profil.regija != "" and public_profil.regija is not None %}
+                    <li class="collection-item">
+                        <div>Regija<span class="secondary-content sivtext">{{public_profil.regija}}</span></div>
+
+                    </li>
+                    {% endif %}
+                    {% if public_profil.visina != "" and public_profil.visina is not None %}
+                    <li class="collection-item">
+                        <div>Višina<span class="secondary-content sivtext">{{ public_profil.visina }} cm</span></div>
+
+                    </li>
+                    {% endif %}
+                    {% if public_profil.spol != "" and public_profil.spol is not None %}
+                    <li class="collection-item">
+                        <div>Spol<span class="secondary-content sivtext">
+                            {% if public_profil.spol == True %}
+                            Moški
+                            {% else %}
+                            Ženski
+                            {% endif %}
+                            </span></div>
+                    </li>
+                    {% endif %}
+                    {% if public_starost is not None %}
+                    <li class="collection-item">
+                        <div>Starost<span class="secondary-content sivtext">{{ public_starost }} let</span></div>
+
+                    </li>
+                    {% endif %}
+                </ul>
+                
+                
+                
+
+            </div>
+            {% if public_profil.bio != "" and public_profil.bio is not None %}
+            <div class="col s12 m12 l7">
+                 <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">Bio</span>
+
+                        <p>
+                            {{public_profil.bio}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+
+
+            <!--<div class="col s12 l8">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="http://opusteno.rs/slike/desktop-pozadine/21289/slike-lava-desktop-t01.jpg" class="responsive-img materialboxed" />
+                    </div>
+                </div>
+            </div>-->
+
+
+
+        </div>
+        <script>
+            var klik = true;
+            $('.kvadratnaslika').click(function () {
+                if(klik==true){
+                    $('.kvadratnaslika').removeClass('square');
+                    klik=false;
+                }
+                else{
+                    $('.kvadratnaslika').addClass('square');
+                    klik=true;
+                }
+                
+            })
+
+
+
+        </script>
+        <div class="row">
+            <div class="col s12 ">
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Povabilo na ples</h3>
+                        <p>Če ti je oseba všeč in bi želel plesati z njo jo moraš prej spoznati. Zgoraj že imaš naštetih nekaj načinov preko katerih se lahko povežeš z osebo. Lahko pa osebo preprosto povabiš na pijačo preko tega gumba. Na voljo imaš tri sporočila, ki bi morala zadostovati, da se dogovorita za kraj in čas srečanja. Ostalo pa se bosta dogovorila v živo ;) </p>
+                        <br />
+                        <a href="{% url 'chat' %}?user={{public_user.id}}" class="waves-effect waves-light btn"><i class="fa fa-glass right fa-2x" aria-hidden="true"></i>Povabi na pijačo</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

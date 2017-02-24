@@ -1,7 +1,8 @@
 ﻿@media screen and (max-width:991px) {
-    body{
-        height:100%;
+    body {
+        height: 100%;
     }
+
     #okrogleslike {
         object-fit: cover;
         width: 50vw;
@@ -13,44 +14,187 @@
         width: 100% !important;
         max-height: 100% !important;
         top: 0 !important;
-        
-        
-    }
-    .modal .row{
-        margin:0px;
     }
 
 
     #socialmedia i {
         font-size: 18pt;
     }
-    #reg .col .s12{
-    padding:0px 0px 0px 0px;
+
+    #reg .col .s12 {
+        padding: 0px 0px 0px 0px;
+    }
+
+    .gridKartice {
+        width: 50%;
+       
+    }
 }
+@media screen and (max-width:600px){
+    .gridKartice {
+        width: 100%;
+       
+    }
 }
 
 @media screen and (min-width:992px) {
     #okrogleslike {
-        object-fit: cover;
+        
         width: 20vw;
         height: 20vw;
-        margin: 2vw 0;
+        max-width: 400px;
+        max-height: 400px;
+
+        object-fit: cover;
     }
 
 
 
     #modal1 {
         width: 60vw;
-        
     }
 
     #modal2 {
         width: 60vw;
-        
+        max-height: 100% !important;
     }
 
 
     #socialLogin {
         padding: 0 5%;
     }
+
+    .gridKartice {
+        width:100%;
+        max-width:33.33%;
+    }
 }
+/* dodano s chatom */
+
+@media screen and (max-width:991px) {
+    body {
+        height: 100%;
+    }
+
+    #okrogleslike {
+        object-fit: cover;
+        width: 50vw;
+        height: 50vw;
+        margin: 30px 0 0 0;
+    }
+
+    .modal {
+        width: 100% !important;
+        max-height: 100% !important;
+        top: 0 !important;
+    }
+
+
+    #socialmedia i {
+        font-size: 18pt;
+    }
+
+    #reg .col .s12 {
+        padding: 0px 0px 0px 0px;
+    }
+
+    .gridKartice {
+        width: 50%;
+    }
+
+    .chatmessage {
+    
+    margin-right: 30%;
+}
+
+.chatmessagejaz {
+    
+    margin-left: 30%;
+}
+
+
+.chat {
+    
+    /*height: 50vh;*/
+}
+
+}
+
+@media screen and (max-width:600px) {
+    .gridKartice {
+        width: 100%;
+    }
+
+    .chatmessage {
+    
+    margin-right: 0px;
+}
+
+.chatmessagejaz {
+    
+    margin-left: 12%;
+}
+
+
+.chat {
+    
+    /*height: 50vh;*/
+}
+
+    
+}
+
+@media screen and (min-width:992px) {
+    #okrogleslike {
+        width: 20vw;
+        height: 20vw;
+        max-height: 400px;
+        max-width: 400px;
+        object-fit: cover;
+    }
+
+    .chatmessage {
+   
+    margin-right: 40%;
+}
+
+.chatmessagejaz {
+      
+    margin-left: 40%;
+}
+
+
+.chat {
+    
+    /*max-height: 50vh;*/
+}
+
+
+    #modal1 {
+        width: 60vw;
+    }
+
+    #modal2 {
+        width: 60vw;
+    }
+
+
+    #socialLogin {
+        padding: 0 5%;
+    }
+
+    .gridKartice {
+        width: 100%;
+        max-width: 33.33%;
+    }
+}
+
+#okrogleprofil {
+    width: 10vw;
+    height: 10vw;
+    max-height: 400px;
+    max-width: 400px;
+    object-fit: cover;
+}
+
+/* konec chata */

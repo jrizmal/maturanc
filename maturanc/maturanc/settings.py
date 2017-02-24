@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
     'sorl.thumbnail',
+    'rest_framework',
+    'chat',
 ]
 
 MIDDLEWARE = [
@@ -80,6 +82,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
+                'chat.context_processors.nova_sporocila',
             ],
         },
     },
@@ -93,8 +96,12 @@ WSGI_APPLICATION = 'maturanc.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'maturanc1',
+        'USER': 'postgres',
+        'PASSWORD': 'jakajaka',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
@@ -123,11 +130,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
-
-USE_I18N = True
-
-USE_L10N = True
+TIME_ZONE = 'CET'
 
 USE_TZ = True
 

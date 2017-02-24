@@ -1,503 +1,167 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} 
 
+{% block title %}
+    <title>Maturanc.com - {{request.user.first_name}} {{request.user.last_name}}</title>
+{% endblock %}
 
-    <div class="container ">
-        <div class="row" id="profil">
-            <!-- TO JE horizontalno poravnano skos na sredino-->
-            <div class="valign-wrapper hide-on-med-and-down">
-                 <div class="col s12 m12 l4 left ">
-                <img id="okrogleslike" class="circle responsive-img" src="{{ request.user.profilnaslika.slika.url }}" />
-            </div>
-            <div class="col s12 m12 l8 left center-on-small-only">
-                <div class="row">
-                    <div class="col s11">
-                        <h3>{{user.first_name}} {{user.last_name}}</h3>
+{% block content %}        
+    <div class="container">
+        <div class="row" id="valignvrsta">
+             
+            <div class="col s12 m6 l5">
+                <div class="card ">
+                    <div class="card-image ">
+                        {% load thumbnail %}
+                        {% if request.user.profilnaslika.slika|is_portrait %}
+                        {% thumbnail request.user.profilnaslika.slika "600x600" crop="center" format="JPEG" as im %}
+                            <img class="square materialboxed kvadratnaslika" src="{{ im.url }}" >
+                        {% endthumbnail %}
+                        {% else %}
+                        {% thumbnail request.user.profilnaslika.slika "600" format="JPEG" as im %}
+                            <img class="square materialboxed kvadratnaslika" src="{{ im.url }}" >
+                        {% endthumbnail %}
+                        {% endif %}
+                       
+
                     </div>
-
-                    <div class="col s1"><a href="{% url 'urejanje_profila' %}"><i class="fa fa-cog fa-2x  right editbtn3" aria-hidden="true"></i></a></div>
                 </div>
-              
-
-
-                <div class="row">
-                    <div class="col s12">
-                        <ul class="collapsible" data-collapsible="accordion">
-                            
-                            <li>
-                                <div class="collapsible-header active"><i class="fa fa-id-card" aria-hidden="true"></i>Podrobnejši podatki</div>
-                                <div class="collapsible-body">
-                                    
-                                    <div class="row" style="margin-bottom:0px; padding:0 5px">
-                                        <div class="col s12">
-                                            <div class="section">
-                                                {% if profil.sola != "" %}
-                                                <div class="row">
-                                                    <div class="col s3 right-align">
-                                                        Šola:
-                                                    </div>
-
-                                                    <div class="col s9 right truncate" >
-                                                        {{ profil.sola }}
-                                                    </div>
-                                                </div>
-                                                {% endif %}
-                                                {% if profil.regija != "" %}
-                                                <div class="row">
-                                                    <div class="col s3 right-align">
-                                                        Regija:
-                                                    </div>
-
-                                                    <div class="col s9 right truncate" >
-                                                        {{ profil.regija }}
-                                                    </div>
-                                                </div>
-                                                {% endif %}
-                                                {% if profil.datum_plesa != null %}
-                                                <div class="row">
-                                                    <div class="col s3 right-align">
-                                                        Ples:
-                                                    </div>
-
-                                                    <div class="col s9 right">
-                                                        {{profil.datum_plesa|date:"d.m.Y"}}
-                                                    </div>
-                                                </div>
-                                                {% endif %}
-                                                {% if profil.starost != null %}
-                                                <div class="row">
-                                                    <div class="col s3 right-align">
-                                                        Starost:
-                                                    </div>
-
-                                                    <div class="col s9 right">
-                                                        {{profil.starost}}
-                                                    </div>
-                                                </div>
-                                                {% endif %}
-                                                {% if profil.spol != null %}
-                                                <div class="row">
-                                                    <div class="col s3 right-align">
-                                                        Spol:
-                                                    </div>
-
-                                                    <div class="col s9 right">
-                                                        {% if profil.spol == True %}
-                                                        Moški
-                                                        {% else %}
-                                                        Ženski
-                                                        {% endif %}
-                                                    </div>
-                                                </div>
-                                                {% endif %}
-                                                {% if profil.visina != null %}
-                                                <div class="row" style="margin-bottom:0px;">
-                                                    <div class="col s3 right-align">
-                                                        Višina:
-                                                    </div>
-
-                                                    <div class="col s9 right">
-                                                        {{ profil.visina }}
-                                                    </div>
-                                                </div>
-                                                {% endif %}
-                                                
-
-                                            </div>
-                                        </div>
-                                    </div>
-
+                {% if request.user.socialnaomrezja.facebook != "" or request.user.socialnaomrezja.snapchat != "" or request.user.socialnaomrezja.instagram != "" or request.user.socialnaomrezja.twitter != "" %}
+                <div class="card">
+                    <div class="card-content">
+                        <div class="row socialmedia">
+                            <div class="section">
+                                {% if request.user.socialnaomrezja.facebook != "" %}
+                                <div class="col center" style="width:25%">
+                                    <a href="#!" class="tooltipped" data-tooltip="{{ request.user.socialnaomrezja.facebook }}" data-delay="50"><i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i></a>
                                 </div>
-                            </li>
-                            {% if profil.bio != "" and profil.bio is not None %}
-                            <li>
-                                <div class="collapsible-header "><i class="fa fa-user" aria-hidden="true"></i>Bio</div>
-                                <div class="collapsible-body">
-                                    <p>
-                                        {{profil.bio}}
-                                    </p>
+                                {% endif %}
+                                {% if request.user.socialnaomrezja.snapchat != "" %}
+                                <div class="col  center" style="width:25%">
+                                    <a href="#!" class="tooltipped" data-tooltip="{{ request.user.socialnaomrezja.snapchat }}" data-delay="50"><i class="fa fa-snapchat-square fa-3x" aria-hidden="true"></i></a>
                                 </div>
-                            </li>
+                                {% endif %}
+                                {% if request.user.socialnaomrezja.instagram != "" %}
+                                <div class="col  center" style="width:25%">
+                                    <a href="#!" class="tooltipped" data-tooltip="{{ request.user.socialnaomrezja.instagram }}" data-delay="50"><i class="fa fa-instagram fa-3x" aria-hidden="true"></i></a>
+                                </div>
+                                {% endif %}
+                                {% if request.user.socialnaomrezja.twitter != "" %}
+                                <div class="col  center" style="width:25%">
+                                    <a href="#!" class="tooltipped" data-tooltip="{{ request.user.socialnaomrezja.twitter }}" data-delay="50"><i class="fa fa-twitter fa-3x" aria-hidden="true"></i></a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+            </div>
+            <div class="col s12 m6 l7">
+
+
+                <ul class="collection with-header z-depth-1">
+                    <li class="collection-header">
+                        <h4>{{ request.user.first_name }} {{ request.user.last_name }}</h4>
+                            {% if request.user.profil.sola is not None and request.user.profil.sola != "" %}
+                            <div >{{ public_profil.sola }}</div>
                             {% endif %}
-                            <li>
-                                <div class="collapsible-header"><i class="fa fa-link" aria-hidden="true"></i>Socialna omrežja</div>
-                                <div class="collapsible-body">
-                                    <div class="row" id="socialmedia">
-                                        <!-- <div class="col s11">
-                            <h4>Socialna omrežja</h4>
-                        </div>
-                        <div class="col s1"><a href="#"><i class="fa fa-pencil fa-2x  right editbtn4" aria-hidden="true"></i></a></div>-->
-                                        <div class="section">
-                                            {% if social.facebook != "" %}
-                                            <div class="col s2 center">
-                                                <a href="http://www.facebook.com/{{social.facebook}}"><i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i></a>
-                                            </div>
-                                            {% endif %}
-                                            {% if social.snapchat != "" %}
-                                            <div class="col s2 center">
-                                                <a href="{{social.snapchat}}"><i class="fa fa-snapchat-square fa-3x" aria-hidden="true"></i></a>
-                                            </div>
-                                            {% endif %}
-                                            {% if social.instagram != "" %}
-                                            <div class="col s2 center">
-                                                <a href="https://www.instagram.com/{{social.instagram}}/"><i class="fa fa-instagram fa-3x" aria-hidden="true"></i></a>
-                                            </div>
-                                            {% endif %}
-                                            {% if social.google != "" %}
-                                            <div class="col s2 center">
-                                                <a href="{{social.google}}"><i class="fa fa-google-plus fa-3x" aria-hidden="true"></i></a>
-                                            </div>
-                                            {% endif %}
-                                            {% if social.twitter != "" %}
-                                            <div class="col s2 center">
-                                                <a href="{{social.twitter}}"><i class="fa fa-twitter fa-3x" aria-hidden="true"></i></a>
-                                            </div>
-                                            {% endif %}
-                                            {% if social.soundcloud != "" %}
-                                            <div class="col s2 center">
-                                                <a href="{{social.soundcloud}}"><i class="fa fa-soundcloud fa-3x" aria-hidden="true"></i></a>
-                                            </div>
-                                            {% endif %}
-                                        </div>
+                        
+                    </li>
+                    {% if request.user.profil.regija != "" and request.user.profil.regija is not None %}
+                    <li class="collection-item">
+                        <div>Regija<span class="secondary-content sivtext">{{request.user.profil.regija}}</span></div>
 
-                                    </div>
-                                </div>
-                            </li>
+                    </li>
+                    {% endif %}
+                    {% if request.user.profil.visina != "" and request.user.profil.visina is not None %}
+                    <li class="collection-item">
+                        <div>Višina<span class="secondary-content sivtext">{{ request.user.profil.visina }} cm</span></div>
 
-                        </ul>
-                    </div>
-                </div>
-
-
-                <!-- <div class="row " id="socialnaomrezja">
-                    <div class="col s12">
-
-
-                        <div class="col s11">
-                            <h4>Socialna omrežja</h4>
-                        </div>
-                        <div class="col s1"><a href="#"><i class="fa fa-pencil fa-2x  right editbtn4" aria-hidden="true"></i></a></div>
-
-                    </div>
-
-                    <div class="col s2">
-                        <a href="#!"><i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i></a>
-                    </div>
-                    <div class="col s2">
-                        <a href="#!"><i class="fa fa-snapchat-square fa-3x" aria-hidden="true"></i></a>
-                    </div>
-                    <div class="col s2">
-                        <a href="#!"><i class="fa fa-instagram fa-3x" aria-hidden="true"></i></a>
-                    </div>
-                    <div class="col s2">
-                        <a href="#!"><i class="fa fa-google-plus fa-3x" aria-hidden="true"></i></a>
-                    </div>
-
-                    <div class="col s2">
-                        <a href="#!"><i class="fa fa-twitter fa-3x" aria-hidden="true"></i></a>
-                    </div>
-                    <div class="col s2">
-                        <a href="#!"><i class="fa fa-soundcloud fa-3x" aria-hidden="true"></i></a>
-                    </div>
-
-
-                </div>-->
-            </div>
-            </div>
-
-
-
-
-
-
-
-
-            <!-- KO je ekran na medium in se spremeni design-->
-            <div class=" hide-on-large-only">
-                <div class="col s12 m12 l4 left center">
-                <img id="okrogleslike" class="circle responsive-img" src="{{ request.user.profilnaslika.slika.url }}" />
-            </div>
-            <div class="col s12 m12 l8 left center-on-small-only">
-                <div class="row">
-                    <div class="col s11">
-                        <h3>{{user.first_name}} {{user.last_name}}</h3>
-                    </div>
-
-                    <div class="col s1"><a href="{% url 'urejanje_profila' %}"><i class="fa fa-cog fa-2x  right editbtn3" aria-hidden="true"></i></a></div>
-                </div>
-                <!--<p>
-                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-                </p>-->
-                <!--<div class="row">
-                    <div class="col s12">
-                        <div class="divider"></div>
-                    </div>
-                </div>-->
-
-
-                <div class="row">
-                    <div class="col s12">
-                        <ul class="collapsible" data-collapsible="accordion">
-                            <li>
-                                <div class="collapsible-header active"><i class="fa fa-id-card" aria-hidden="true"></i>Podrobnejši podatki</div>
-                                <div class="collapsible-body">
-                                    
-                                    <div class="row" style="margin-bottom:0px; padding:0 5px">
-                                        <div class="col s12">
-                                            <!--<div class="section">
-                                                <div class="row">
-                                                    <div class="col s3 right-align">
-                                                        Šola:
-                                                    </div>
-
-                                                    <div class="col s9 right truncate" >
-                                                        Srednja šola za kemijo elektrotehniko in računalništvo
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col s3 right-align">
-                                                        Ples:
-                                                    </div>
-
-                                                    <div class="col s9 right">
-                                                        3.2.2017
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col s3 right-align">
-                                                        Starost:
-                                                    </div>
-
-                                                    <div class="col s9 right">
-                                                        18
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col s3 right-align">
-                                                        Spol:
-                                                    </div>
-
-                                                    <div class="col s9 right">
-                                                        Moški
-                                                    </div>
-                                                </div>
-                                                <div class="row" style="margin-bottom:0px;">
-                                                    <div class="col s3 right-align">
-                                                        Višina:
-                                                    </div>
-
-                                                    <div class="col s9 right">
-                                                        180
-                                                    </div>
-                                                </div>
-
-                                            </div>-->
-
-                                            <div class="section">
-                                                {% if profil.sola != "" %}
-                                                <div class="row">
-                                                    <div class="col s3 right-align">
-                                                        Šola:
-                                                    </div>
-
-                                                    <div class="col s9 right truncate" >
-                                                        {{ profil.sola }}
-                                                    </div>
-                                                </div>
-                                                {% endif %}
-                                                {% if profil.regija != "" %}
-                                                <div class="row">
-                                                    <div class="col s3 right-align">
-                                                        Regija:
-                                                    </div>
-
-                                                    <div class="col s9 right truncate" >
-                                                        {{ profil.regija }}
-                                                    </div>
-                                                </div>
-                                                {% endif %}
-                                                {% if profil.datum_plesa != null %}
-                                                <div class="row">
-                                                    <div class="col s3 right-align">
-                                                        Ples:
-                                                    </div>
-
-                                                    <div class="col s9 right">
-                                                        {{profil.datum_plesa|date:"d.m.Y"}}
-                                                    </div>
-                                                </div>
-                                                {% endif %}
-                                                {% if profil.starost != null %}
-                                                <div class="row">
-                                                    <div class="col s3 right-align">
-                                                        Starost:
-                                                    </div>
-
-                                                    <div class="col s9 right">
-                                                        {{profil.starost}}
-                                                    </div>
-                                                </div>
-                                                {% endif %}
-                                                {% if profil.spol != null %}
-                                                <div class="row">
-                                                    <div class="col s3 right-align">
-                                                        Spol:
-                                                    </div>
-
-                                                    <div class="col s9 right">
-                                                        {% if profil.spol == True %}
-                                                        Moški
-                                                        {% else %}
-                                                        Ženski
-                                                        {% endif %}
-                                                    </div>
-                                                </div>
-                                                {% endif %}
-                                                {% if profil.visina != null %}
-                                                <div class="row" style="margin-bottom:0px;">
-                                                    <div class="col s3 right-align">
-                                                        Višina:
-                                                    </div>
-
-                                                    <div class="col s9 right">
-                                                        {{ profil.visina }}
-                                                    </div>
-                                                </div>
-                                                {% endif %}
-                                                
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </li>
-                            {% if profil.bio != "" and profil.bio is not None %}
-                            <li>
-                                <div class="collapsible-header "><i class="fa fa-user" aria-hidden="true"></i>Bio</div>
-                                <div class="collapsible-body">
-                                    <p>
-                                        {{profil.bio}}
-                                    </p>
-                                </div>
-                            </li>
+                    </li>
+                    {% endif %}
+                    {% if request.user.profil.spol != "" and request.user.profil.spol is not None %}
+                    <li class="collection-item">
+                        <div>Spol<span class="secondary-content sivtext">
+                            {% if request.user.profil.spol == True %}
+                            Moški
+                            {% else %}
+                            Ženski
                             {% endif %}
+                            </span></div>
+                    </li>
+                    {% endif %}
+                    {% if starost is not None %}
+                    <li class="collection-item">
+                        <div>Starost<span class="secondary-content sivtext">{{ starost }} let</span></div>
 
-                            <li>
-                                <div class="collapsible-header"><i class="fa fa-link" aria-hidden="true"></i>Socialna omrežja</div>
-                                <div class="collapsible-body">
-                                    <div class="row" id="socialmedia">
-                                        <!-- <div class="col s11">
-                            <h4>Socialna omrežja</h4>
-                        </div>
-                        <div class="col s1"><a href="#"><i class="fa fa-pencil fa-2x  right editbtn4" aria-hidden="true"></i></a></div>-->
-                                        <div class="section">
-                                            {% if social.facebook != "" %}
-                                            <div class="col s2 center">
-                                                <a href="http://www.facebook.com/{{social.facebook}}"><i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i></a>
-                                            </div>
-                                            {% endif %}
-                                            {% if social.snapchat != "" %}
-                                            <div class="col s2 center">
-                                                <a href="{{social.snapchat}}"><i class="fa fa-snapchat-square fa-3x" aria-hidden="true"></i></a>
-                                            </div>
-                                            {% endif %}
-                                            {% if social.instagram != "" %}
-                                            <div class="col s2 center">
-                                                <a href="https://www.instagram.com/{{social.instagram}}/"><i class="fa fa-instagram fa-3x" aria-hidden="true"></i></a>
-                                            </div>
-                                            {% endif %}
-                                            {% if social.google != "" %}
-                                            <div class="col s2 center">
-                                                <a href="{{social.google}}"><i class="fa fa-google-plus fa-3x" aria-hidden="true"></i></a>
-                                            </div>
-                                            {% endif %}
-                                            {% if social.twitter != "" %}
-                                            <div class="col s2 center">
-                                                <a href="{{social.twitter}}"><i class="fa fa-twitter fa-3x" aria-hidden="true"></i></a>
-                                            </div>
-                                            {% endif %}
-                                            {% if social.soundcloud != "" %}
-                                            <div class="col s2 center">
-                                                <a href="{{social.soundcloud}}"><i class="fa fa-soundcloud fa-3x" aria-hidden="true"></i></a>
-                                            </div>
-                                            {% endif %}
-                                        </div>
-                                        
+                    </li>
+                    {% endif %}
+                </ul>
+                
+                
+                
 
-                                    </div>
-                                </div>
-                            </li>
+            </div>
+            {% if request.user.profil.bio != "" and request.user.profil.bio is not None %}
+            <div class="col s12 m12 l7">
+                 <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">Bio</span>
 
-                        </ul>
+                        <p>
+                            {{request.user.profil.bio}}
+                        </p>
                     </div>
                 </div>
-
-
-                <!-- <div class="row " id="socialnaomrezja">
-                    <div class="col s12">
-
-
-                        <div class="col s11">
-                            <h4>Socialna omrežja</h4>
-                        </div>
-                        <div class="col s1"><a href="#"><i class="fa fa-pencil fa-2x  right editbtn4" aria-hidden="true"></i></a></div>
-
-                    </div>
-
-                    <div class="col s2">
-                        <a href="#!"><i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i></a>
-                    </div>
-                    <div class="col s2">
-                        <a href="#!"><i class="fa fa-snapchat-square fa-3x" aria-hidden="true"></i></a>
-                    </div>
-                    <div class="col s2">
-                        <a href="#!"><i class="fa fa-instagram fa-3x" aria-hidden="true"></i></a>
-                    </div>
-                    <div class="col s2">
-                        <a href="#!"><i class="fa fa-google-plus fa-3x" aria-hidden="true"></i></a>
-                    </div>
-
-                    <div class="col s2">
-                        <a href="#!"><i class="fa fa-twitter fa-3x" aria-hidden="true"></i></a>
-                    </div>
-                    <div class="col s2">
-                        <a href="#!"><i class="fa fa-soundcloud fa-3x" aria-hidden="true"></i></a>
-                    </div>
-
-
-                </div>-->
             </div>
-            </div>
+            {% endif %}
             
-        </div>
-        <div class="row">
-            <div class="col s12">
-                <div class="divider"></div>
-            </div>
-            <!--<div class="row">
-                <div class="col s12">
-                    <ul class="tabs">
-                        <li class="tab col s3"><a href="#test1">Test 1</a></li>
-                        <li class="tab col s3"><a href="#test2">Test 2</a></li>
-                        <li class="tab col s3"><a href="#test3">Test 3</a></li>
-                    </ul>
+            
+
+
+
+            <!--<div class="col s12 l8">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="http://opusteno.rs/slike/desktop-pozadine/21289/slike-lava-desktop-t01.jpg" class="responsive-img materialboxed" />
+                    </div>
                 </div>
-                <div id="test1" class="col s12"></div>
-                <div id="test2" class="col s12"></div>
-                <div id="test3" class="col s12">Test 3</div>
             </div>-->
 
-            <div class="col s12">
-                <h3>Povabilo na ples</h3>
-                <p>Če ti je oseba všeč in bi želel plesati z njo jo moraš prej spoznati. Zgoraj že imaš naštetih nekaj načinov preko katerih se lahko povežeš z osebo. Lahko pa osebo preprosto povabiš na pijačo preko tega gumba. Na voljo imaš tri sporočila, ki bi morala zadostovati, da se dogovorita za kraj in čas srečanja. Ostalo pa se bosta dogovorila v živo ;) </p>
-                <br />
-                <a class="waves-effect waves-light btn"><i class="fa fa-glass right fa-2x" aria-hidden="true"></i>Povabi na pijačo</a>
-            </div>
+
+
         </div>
+        <script>
+            var klik = true;
+            $('.kvadratnaslika').click(function () {
+                if(klik==true){
+                    $('.kvadratnaslika').removeClass('square');
+                    klik=false;
+                }
+                else{
+                    $('.kvadratnaslika').addClass('square');
+                    klik=true;
+                }
+                
+            })
+
+
+
+        </script>
+        <!--<div class="row">
+            <div class="col s12 ">
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Povabilo na ples</h3>
+                        <p>Če ti je oseba všeč in bi želel plesati z njo jo moraš prej spoznati. Zgoraj že imaš naštetih nekaj načinov preko katerih se lahko povežeš z osebo. Lahko pa osebo preprosto povabiš na pijačo preko tega gumba. Na voljo imaš tri sporočila, ki bi morala zadostovati, da se dogovorita za kraj in čas srečanja. Ostalo pa se bosta dogovorila v živo ;) </p>
+                        <br />
+                        <a class="waves-effect waves-light btn"><i class="fa fa-glass right fa-2x" aria-hidden="true"></i>Povabi na pijačo</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>-->
+
     </div>
-
-
-
-
 {% endblock %}

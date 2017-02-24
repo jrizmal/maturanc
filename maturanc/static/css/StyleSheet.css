@@ -43,6 +43,10 @@
     color: black;
 }
 
+.socialmedia a {
+    color: black;
+}
+
 #profil a {
     color: black;
 }
@@ -120,6 +124,105 @@ h4 .material-icons {
    
 }
 
+/* jrizzla custom css */
+.darkerBlue{
+    background-color: #123436 !important;
+}
+.lighterBlue{
+    background-color: #336669 !important;
+}
+.optioncard .row{
+    margin-bottom:10px;
+    padding-bottom:0px;
+}
+
+.sivtext{
+    color:#696969;
+}
+
+/* dodano s chatom */
+
+.avatar {
+    position: relative;
+    min-height: 60px !important;
+}
+
+    /*.avatar img {
+        position: absolute;
+        bottom: 30px;
+        right: 0;
+    }*/
+
+.chatslika {
+    object-fit: cover;
+    position: absolute;
+    bottom: 30px;
+    right: 0;
+}
+
+.chatmessage {
+    background-color: #e9e9e9;
+    border-radius: 20px;
+    padding: 15px 20px 15px 20px;
+    
+}
+
+.chatmessagejaz {
+    background-color: #d6e2e8;
+    border-radius: 20px;
+    padding:  15px 20px 15px 20px;  
+    
+}
+
+    .chatmessagejaz p {
+        margin: 0px;
+    }
+
+.chat {
+    overflow-y: scroll;
+    min-height:5vh;
+    max-height: 50vh;
+}
+.poslji{
+    position:absolute;
+    right:0;
+    bottom:1px;
+}
+
+/* konec chata */
+
+.karticaprofil{
+    min-height:300px;
+    max-height:300px;
+    object-fit:cover;
+}
+/* chat cajt */
+.cajt {
+    font-size: 10pt;
+    color: gray;
+}
+
+.cajtjaz {
+    margin-top: 5px !important;
+    font-size: 10pt;
+    color: gray;
+}
+
+.chat .collection-item{
+    padding-bottom:30px
+}
+/* konec chat cajt */
+.chat-send{
+  
+   padding: 0 !important;
+   margin: 0 !important;
+}
+.row-send{
+    margin: 0 !important;
+}
+.card-content.content-send{
+    padding: 10px 10px 30px 10px !important;
+}
 
 
 
